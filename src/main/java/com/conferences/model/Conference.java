@@ -1,0 +1,72 @@
+package com.conferences.model;
+import java.time.LocalDateTime;
+
+public class Conference {
+
+    private int conferenceID;
+    private String title;
+    private String description;
+    private int capacity;
+    private LocalDateTime startDateTime;
+    private LocalDateTime endDateTime;
+    private String location;
+
+    //Constructor
+    public Conference(int conferenceID, String title, String description, int capacity, LocalDateTime startDateTime, LocalDateTime endDateTime, String location) {
+        this.conferenceID = conferenceID;
+        this.title = title;
+        this.description = description;
+        this.capacity = capacity;
+        this.startDateTime = startDateTime;
+        this.endDateTime = endDateTime;
+        this.location = location;
+    }
+
+    //Setters
+    public void setConferenceID(int conferenceID) {
+        this.conferenceID = conferenceID;
+    }
+    public void setTitle(String title) {
+        this.title = title;
+    }
+    public void setDescription(String description) {
+        this.description = description;
+    }
+    public void setCapacity(int capacity) {
+        this.capacity = capacity;
+    }
+    public void setStartDateTime(LocalDateTime startDateTime) {
+        this.startDateTime = startDateTime;
+    }
+    public void setEndDateTime(LocalDateTime endDateTime) {
+        this.endDateTime = endDateTime;
+    }
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    //Getters
+    public int getConferenceID() {
+        return conferenceID;
+    }   
+    public String getTitle() {
+        return title;
+    }
+    public String getDescription() {
+        return description;
+    }   
+    public int getCapacity() {
+        return capacity;
+    }   
+    public LocalDateTime getStartDateTime() {
+        return startDateTime;
+    }   
+    public LocalDateTime getEndDateTime() {
+        return endDateTime;
+    }   
+    public String getLocation() {
+        return location;
+    }   
+
+
+}
