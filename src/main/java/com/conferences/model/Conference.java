@@ -5,17 +5,15 @@ public class Conference {
 
     private int conferenceID;
     private String title;
-    private String description;
     private int capacity;
     private LocalDateTime startDateTime;
     private LocalDateTime endDateTime;
     private String location;
 
     //Constructor
-    public Conference(int conferenceID, String title, String description, int capacity, LocalDateTime startDateTime, LocalDateTime endDateTime, String location) {
+    public Conference(int conferenceID, String title, int capacity, LocalDateTime startDateTime, LocalDateTime endDateTime, String location) {
         this.conferenceID = conferenceID;
         this.title = title;
-        this.description = description;
         this.capacity = capacity;
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
@@ -28,9 +26,6 @@ public class Conference {
     }
     public void setTitle(String title) {
         this.title = title;
-    }
-    public void setDescription(String description) {
-        this.description = description;
     }
     public void setCapacity(int capacity) {
         this.capacity = capacity;
@@ -52,9 +47,6 @@ public class Conference {
     public String getTitle() {
         return title;
     }
-    public String getDescription() {
-        return description;
-    }   
     public int getCapacity() {
         return capacity;
     }   
