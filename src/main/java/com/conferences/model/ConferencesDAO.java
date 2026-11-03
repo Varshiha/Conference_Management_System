@@ -12,13 +12,6 @@ import java.util.List;
 public class ConferencesDAO {
 
     DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");   
-    public void createTable() throws SQLException {
-        String sql = "CREATE TABLE IF NOT EXISTS Conferences (C_ID INTEGER PRIMARY KEY AUTOINCREMENT, Title TEXT NOT NULL, Capacity INTEGER NOT NULL CHECK(Capacity > 0), Start_DateTime TEXT NOT NULL, End_DateTime TEXT NOT NULL CHECK (End_DateTime > Start_DateTime), Location TEXT)";
-        try (Connection con = DatabaseConnection.getConnection();
-             Statement stmt = con.createStatement()) {
-            stmt.execute(sql);
-        }
-    }
 
     public void addConference(Conference c) throws SQLException {
         String sql = "INSERT INTO Conferences (Title, Capacity, Start_DateTime, End_DateTime, Location) VALUES(?,?,?,?,?)";
