@@ -19,6 +19,13 @@ public class Conference {
         this.endDateTime = endDateTime;
         this.location = location;
     }
+     public Conference(String title, int capacity, LocalDateTime startDateTime, LocalDateTime endDateTime, String location) {
+        this.title = title;
+        this.capacity = capacity;
+        this.startDateTime = startDateTime;
+        this.endDateTime = endDateTime;
+        this.location = location;
+    }
 
     //Setters
     public void setConferenceID(int conferenceID) {
