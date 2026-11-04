@@ -32,8 +32,8 @@ CREATE TABLE IF NOT EXISTS "Registrations"(
 	"Registration_Date" TEXT NOT NULL,
 	"Status" TEXT NOT NULL CHECK ("Status" IN ('CONFIRMED', 'WAITLISTED', 'CANCELLED')),
 	"Waitinglist_Position" INTEGER,
-	FOREIGN KEY ("U_ID") REFERENCES "Users"("U_ID"),
-	FOREIGN KEY ("C_ID") REFERENCES "Conferences"("C_ID"),
+	FOREIGN KEY ("U_ID") REFERENCES "Users"("U_ID") ON DELETE CASCADE,
+	FOREIGN KEY ("C_ID") REFERENCES "Conferences"("C_ID") ON DELETE CASCADE,
 	CHECK(("Status" = 'WAITLISTED' AND "Waitinglist_Position" > 0) OR ("Status" != 'WAITLISTED' AND "Waitinglist_Position"  IS NULL))
 );
 
