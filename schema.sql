@@ -1,12 +1,11 @@
 BEGIN TRANSACTION;
 CREATE TABLE IF NOT EXISTS "Conferences" (
-	"C_ID"	INTEGER,
+	"C_ID"	INTEGER PRIMARY KEY AUTOINCREMENT,
 	"Title"	TEXT NOT NULL,
 	"Capacity"	INTEGER NOT NULL CHECK("Capacity" > 0),
 	"Start_DateTime"	TEXT NOT NULL,
 	"End_DateTime"	TEXT NOT NULL CHECK("End_DateTime" > "Start_DateTime"),
-	"Location"	TEXT,
-	PRIMARY KEY("C_ID" AUTOINCREMENT)
+	"Location"	TEXT
 );
 
 /*ADDED THE USER PROFILE TABLE*/
@@ -25,4 +24,20 @@ CREATE TABLE IF NOT EXISTS "Credentials"(
 	PRIMARY KEY("U_ID"),
 	FOREIGN KEY("U_ID") REFERENCES "Users"("U_ID") ON DELETE CASCADE
 );
+
+CREATE TABLE IF NOT EXISTS "Registrations"(
+	"R_ID" INTEGER PRIMARY KEY AUTOINCREMENT,
+	"U_ID" INTEGER NOT NULL,
+	"C_ID" INTEGER NOT NULL,
+	"Registration_Date" TEXT NOT NULL,
+	"Status" TEXT NOT NULL CHECK ("Status" IN ('CONFIRMED', 'WAITLISTED', 'CANCELLED')),
+	"Waitinglist_Position" INTEGER,
+	FOREIGN KEY ("U_ID") REFERENCES "Users"("U_ID"),
+	FOREIGN KEY ("C_ID") REFERENCES "Conferences"("C_ID"),
+	CHECK(("Status" = 'WAITLISTED' AND "Waitinglist_Position" > 0) OR ("Status" != 'WAITLISTED' AND "Waitinglist_Position"  IS NULL))
+);
+
+CREATE UNIQUE INDEX IF NOT EXISTS "Unique_Active_Reg"
+ON Registrations ("U_ID", "C_ID")
+WHERE "Status" != 'CANCELLED';
 COMMIT;

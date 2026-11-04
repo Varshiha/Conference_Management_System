@@ -15,6 +15,7 @@ public class DatabaseConnection {
             stmt.execute("PRAGMA foreign_keys = ON");
             return con;
         }catch(SQLException e){
+            con.close();
             System.err.println("Error enabling foreign keys: " + e.getMessage());
            throw e;
         }
