@@ -7,23 +7,23 @@ public class Registration {
     private int userId;
     private LocalDateTime registrationDate;
     private String status;
-    private Integer waitinglistPosition;
+    private Integer waitlistPosition;
 
-    public Registration(int registrationId, int conferenceId, int userId, LocalDateTime registrationDate, String status, Integer waitinglistPosition) {
+    public Registration(int registrationId, int conferenceId, int userId, LocalDateTime registrationDate, String status, Integer waitlistPosition) {
         this.registrationId = registrationId;
         this.conferenceId = conferenceId;
         this.userId = userId;
         this.registrationDate = registrationDate;
         this.status = status;
-        this.waitinglistPosition = waitinglistPosition;
+        this.waitlistPosition = waitlistPosition;
     }
 
-    public Registration(int conferenceId, int userId, LocalDateTime registrationDate, String status, Integer waitinglistPosition) {
+    public Registration(int conferenceId, int userId, LocalDateTime registrationDate, String status, Integer waitlistPosition) {
         this.conferenceId = conferenceId;
         this.userId = userId;
         this.registrationDate = registrationDate;
         this.status = status;
-        this.waitinglistPosition = waitinglistPosition;
+        this.waitlistPosition = waitlistPosition;
     }
 
     public int getRegistrationId() {
@@ -56,11 +56,11 @@ public class Registration {
     public void setStatus(String status) {
         this.status = status;
     }
-    public Integer getWaitinglistPosition() {
-        return waitinglistPosition;
+    public Integer getWaitlistPosition() {
+        return waitlistPosition;
     }
-    public void setWaitinglistPosition(Integer waitinglistPosition) {
-        this.waitinglistPosition = waitinglistPosition;
+    public void setWaitlistPosition(Integer waitlistPosition) {
+        this.waitlistPosition = waitlistPosition;
     }
 
 }

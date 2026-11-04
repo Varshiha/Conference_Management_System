@@ -21,25 +21,3 @@ VALUES("Database Management Workshop", 25, "2027-01-01 09:00", "2027-01-01 14:00
 
 INSERT INTO Conferences (Title, Capacity, Start_DateTime, End_DateTime, Location)
 VALUES("Advanced C# Course", 5, "2027-01-01 09:00", "2027-01-01 12:00", "Vanier");
-
-
-
-
-/*
-/*Participants for conference 1*/
-/*INSERT INTO REGISTRATIONS (U_ID, C_ID, Registration_Date, Status, Waitinglist_Position)
-VALUES (?, 1, "2026-11-28 13:00" "CONFRIMED", NULL);
-INSERT INTO REGISTRATIONS (U_ID, C_ID, Registration_Date, Status, Waitinglist_Position)
-VALUES (?, 1, "2026-12-12 09:00" "CONFRIMED", NULL);
-INSERT INTO REGISTRATIONS (U_ID, C_ID, Registration_Date, Status, Waitinglist_Position)
-VALUES (?, 1, "2026-11-11 08:00" "CONFRIMED", NULL);*/
-
-
-/*Participants for conference 2*/
-/*INSERT INTO REGISTRATIONS (U_ID, C_ID, Registration_Date, Status, Waitinglist_Position)
-VALUES (?,2, "2026-12-08 13:00" "CONFRIMED", NULL);
-INSERT INTO REGISTRATIONS (U_ID, C_ID, Registration_Date, Status, Waitinglist_Position)
-VALUES (?, 2, "2026-12-01 16:00" "CONFRIMED", NULL);
-INSERT INTO REGISTRATIONS (U_ID, C_ID, Registration_Date, Status, Waitinglist_Position)
-VALUES (?, 2, "2026-11-11 16:00" "CONFRIMED", NULL);*/
-

@@ -1,5 +1,6 @@
 package com.conferences.model;
 import java.sql.Connection;
+import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,22 +15,30 @@ import java.util.ArrayList;
 
 public class RegistrationsDAO {
      
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");   
-    private Logger logger = Logger.getLogger(RegistrationsDAO.class.getName());
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");   
+    private static final Logger logger = Logger.getLogger(RegistrationsDAO.class.getName());
 
     //Create operation
-    public void addRegistration(Registration r) throws SQLException {
-         String sql = "INSERT INTO Registrations (C_ID, U_ID, Registration_Date, Status, Waitinglist_Position) VALUES(?,?,?,?,?)";
+    public boolean addRegistration(Registration r) throws SQLException {
+         String sql = "INSERT INTO Registrations (C_ID, U_ID, Registration_Date, Status, Waitlist_Position) VALUES(?,?,?,?,?)";
         try(Connection con = DatabaseConnection.getConnection();
-            PreparedStatement pstmt = con.prepareStatement(sql)){
+            PreparedStatement pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
                 pstmt.setInt(1, r.getConferenceId());
                 pstmt.setInt(2, r.getUserId());
                 pstmt.setString(3, r.getRegistrationDate().format(formatter));
                 pstmt.setString(4, r.getStatus());
-                pstmt.setObject(5, r.getWaitinglistPosition());
+                pstmt.setObject(5, r.getWaitlistPosition());
                 pstmt.executeUpdate();
+                try(ResultSet rs = pstmt.getGeneratedKeys()){
+                    if(rs.next()){
+                        r.setRegistrationId(rs.getInt(1));
+                    }else{
+                        throw new SQLException("Registration ID was not generated");
+                    }
+                }
+                return true;
             }catch(SQLException e){
-                logger.log(Level.SEVERE, "Error adding registration: " + e.getMessage(), e);
+                logger.log(Level.SEVERE, "Error adding registration: ", e);
                 throw e;
             }
     }
@@ -46,13 +55,14 @@ public class RegistrationsDAO {
                         int C_ID = rs.getInt("C_ID");
                         int U_ID = rs.getInt("U_ID");
                         LocalDateTime registrationDate = LocalDateTime.parse(rs.getString("Registration_Date"), formatter);
-                        String status = rs.getString("Status");
-                        Integer waitinglistPosition = (Integer) rs.getObject("Waitinglist_Position");
+                        String status = rs.getString("Status"); 
+                        int position = rs.getInt("Waitlist_Position");
+                        Integer waitinglistPosition = rs.wasNull() ? null : position;
                         r = new Registration(R_ID, C_ID, U_ID, registrationDate, status, waitinglistPosition);
                     }
                 }
             }catch(SQLException e){
-                logger.log(Level.SEVERE, "Error retrieving registration by ID: " + e.getMessage(), e);
+                logger.log(Level.SEVERE, "Error retrieving registration by ID: ", e);
                 throw e;
             }  
         return r;
@@ -71,12 +81,13 @@ public class RegistrationsDAO {
                         int U_ID = rs.getInt("U_ID");
                         LocalDateTime registrationDate = LocalDateTime.parse(rs.getString("Registration_Date"), formatter);
                         String status = rs.getString("Status");
-                        Integer waitinglistPosition = (Integer) rs.getObject("Waitinglist_Position");
+                        int position = rs.getInt("Waitlist_Position");
+                        Integer waitinglistPosition = rs.wasNull() ? null : position;
                         registrations.add(new Registration(R_ID, C_ID, U_ID, registrationDate, status, waitinglistPosition));
                     }
                 }
             }catch(SQLException e){
-                logger.log(Level.SEVERE, "Error retrieving registration by user ID: " + e.getMessage(), e);
+                logger.log(Level.SEVERE, "Error retrieving registration by user ID: ", e);
                 throw e;
             }  
         return registrations;
@@ -95,42 +106,46 @@ public class RegistrationsDAO {
                         int U_ID = rs.getInt("U_ID");
                         LocalDateTime registrationDate = LocalDateTime.parse(rs.getString("Registration_Date"), formatter);
                         String status = rs.getString("Status");
-                        Integer waitinglistPosition = (Integer) rs.getObject("Waitinglist_Position");
+                        int position = rs.getInt("Waitlist_Position");
+                        Integer waitinglistPosition = rs.wasNull() ? null : position;
+
                         registrations.add(new Registration(R_ID, C_ID, U_ID, registrationDate, status, waitinglistPosition));
                     }
                 }
             }catch(SQLException e){
-                logger.log(Level.SEVERE, "Error retrieving registration by conference ID: " + e.getMessage(), e);
+                logger.log(Level.SEVERE, "Error retrieving registration by conference ID: ", e);
                 throw e;
             }  
         return registrations;
     }
 
     //Update operation
-    public void updateRegistration(Registration r) throws SQLException{
-        String sql = "UPDATE Registrations SET Status = ?, Waitinglist_Position = ? WHERE R_ID = ?";
+    public boolean updateRegistration(Registration r) throws SQLException{
+        String sql = "UPDATE Registrations SET Status = ?, Waitlist_Position = ? WHERE R_ID = ?";
 
         try(Connection con = DatabaseConnection.getConnection();
             PreparedStatement pstmt = con.prepareStatement(sql)){
                 pstmt.setString(1, r.getStatus());
-                pstmt.setObject(2, r.getWaitinglistPosition());
+                pstmt.setObject(2, r.getWaitlistPosition());
                 pstmt.setInt(3, r.getRegistrationId());
-                pstmt.executeUpdate();
+                int rowsAffected = pstmt.executeUpdate();
+                return rowsAffected > 0;
             }catch(SQLException e){
-                logger.log(Level.SEVERE, "Error updating registration: " + e.getMessage(), e);
+                logger.log(Level.SEVERE, "Error updating registration: ", e);
                 throw e;
             }
     }
 
     //Delete operation
-    public void deleteRegistration(int registrationID) throws SQLException{
+    public boolean deleteRegistration(int registrationID) throws SQLException{
         String sql = "DELETE FROM Registrations WHERE R_ID = ?";
         try(Connection con = DatabaseConnection.getConnection();
             PreparedStatement pstmt = con.prepareStatement(sql)){
                 pstmt.setInt(1, registrationID);
-                pstmt.executeUpdate();
+                    int rowsAffected = pstmt.executeUpdate();
+            return rowsAffected > 0;
             }catch(SQLException e){
-                 logger.log(Level.SEVERE, "Error deleting registration: " + e.getMessage(), e);
+                 logger.log(Level.SEVERE, "Error deleting registration: ", e);
             throw e;
             }
     }

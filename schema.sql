@@ -12,13 +12,13 @@ CREATE TABLE IF NOT EXISTS "Conferences" (
 CREATE TABLE IF NOT EXISTS "Users"(
 	"U_ID" 	INTEGER PRIMARY KEY AUTOINCREMENT,
 	"Full_Name" tEXT NOT NULL,
-	"Age" INTEGER NOT NULL,
+	"Age" INTEGER NOT NULL CHECK("Age" > 0),
 	"Role" TEXT NOT NULL CHECK("Role" IN ('ADMIN','PARTICIPANT'))
 );
 
 /*ADDED THE USER CREDENTIALS TABLE*/
 CREATE TABLE IF NOT EXISTS "Credentials"(
-	"U_ID" INTEGER,
+	"U_ID" INTEGER NOT NULL,
 	"Email_Address" TEXT NOT NULL UNIQUE,
 	"Password" TEXT NOT NULL,
 	PRIMARY KEY("U_ID"),
@@ -31,10 +31,10 @@ CREATE TABLE IF NOT EXISTS "Registrations"(
 	"C_ID" INTEGER NOT NULL,
 	"Registration_Date" TEXT NOT NULL,
 	"Status" TEXT NOT NULL CHECK ("Status" IN ('CONFIRMED', 'WAITLISTED', 'CANCELLED')),
-	"Waitinglist_Position" INTEGER,
+	"Waitlist_Position" INTEGER,
 	FOREIGN KEY ("U_ID") REFERENCES "Users"("U_ID") ON DELETE CASCADE,
-	FOREIGN KEY ("C_ID") REFERENCES "Conferences"("C_ID") ON DELETE CASCADE,
-	CHECK(("Status" = 'WAITLISTED' AND "Waitinglist_Position" > 0) OR ("Status" != 'WAITLISTED' AND "Waitinglist_Position"  IS NULL))
+	FOREIGN KEY ("C_ID") REFERENCES "Conferences"("C_ID"),
+	CHECK(("Status" = 'WAITLISTED' AND "Waitlist_Position" > 0) OR ("Status" != 'WAITLISTED' AND "Waitlist_Position"  IS NULL))
 );
 
 CREATE UNIQUE INDEX IF NOT EXISTS "Unique_Active_Reg"

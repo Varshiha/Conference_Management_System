@@ -1,6 +1,7 @@
 package com.conferences.model;
 import java.sql.Connection;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.sql.PreparedStatement;
 import java.time.format.DateTimeFormatter;
 import java.sql.ResultSet;
@@ -12,38 +13,47 @@ import java.util.logging.Logger;
 
 public class ConferencesDAO {
 
-    private DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");   
-    private Logger logger = Logger.getLogger(ConferencesDAO.class.getName());
+    private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");   
+    private static final Logger logger = Logger.getLogger(ConferencesDAO.class.getName());
 
-    public void addConference(Conference c) throws SQLException {
+    public boolean addConference(Conference c) throws SQLException {
         String sql = "INSERT INTO Conferences (Title, Capacity, Start_DateTime, End_DateTime, Location) VALUES(?,?,?,?,?)";
         try(Connection con = DatabaseConnection.getConnection();
-            PreparedStatement pstmt = con.prepareStatement(sql)){
+            PreparedStatement pstmt = con.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS)){
                 pstmt.setString(1, c.getTitle());
                 pstmt.setInt(2, c.getCapacity());
                 pstmt.setString(3, c.getStartDateTime().format(formatter));
                 pstmt.setString(4, c.getEndDateTime().format(formatter));
                 pstmt.setString(5, c.getLocation());
                 pstmt.executeUpdate();
+                try(ResultSet rs = pstmt.getGeneratedKeys()){
+                    if(rs.next()){
+                        c.setConferenceID(rs.getInt(1));
+                    }else{
+                        throw new SQLException("Conference ID was not generated");
+                    }
+                }
+                return true;
             }catch(SQLException e){
-                logger.log(Level.SEVERE, "Error adding conference: " + e.getMessage(), e);
+                logger.log(Level.SEVERE, "Error adding conference: ", e);
                 throw e;
             }
     }
 
-    public void deleteConference(int conferenceID) throws SQLException {
+    public boolean deleteConference(int conferenceID) throws SQLException {
         String sql = "DELETE FROM Conferences WHERE C_ID = ?";
         try(Connection con = DatabaseConnection.getConnection();
             PreparedStatement pstmt = con.prepareStatement(sql)){
             pstmt.setInt(1, conferenceID);
-            pstmt.executeUpdate();
+            int rowsAffected = pstmt.executeUpdate();
+            return rowsAffected > 0;
         }catch(SQLException e){
-            logger.log(Level.SEVERE, "Error deleting conference: " + e.getMessage(), e);
+            logger.log(Level.SEVERE, "Error deleting conference: ", e);
             throw e;
         }
     }
 
-    public void updateConference(Conference c) throws SQLException {
+    public boolean updateConference(Conference c) throws SQLException {
         String sql = "UPDATE Conferences SET Title = ?, Capacity = ?, Start_DateTime = ?, End_DateTime = ?, Location = ? WHERE C_ID = ?";
         try(Connection con = DatabaseConnection.getConnection();
             PreparedStatement pstmt = con.prepareStatement(sql)){
@@ -53,9 +63,10 @@ public class ConferencesDAO {
                 pstmt.setString(4, c.getEndDateTime().format(formatter));   
                 pstmt.setString(5, c.getLocation());
                 pstmt.setInt(6, c.getConferenceID());
-                pstmt.executeUpdate();
+                int rowsAffected = pstmt.executeUpdate();
+                return rowsAffected > 0;
         }catch(SQLException e){
-            logger.log(Level.SEVERE, "Error updating conference: " + e.getMessage(), e);
+            logger.log(Level.SEVERE, "Error updating conference: ", e);
             throw e;
         }
     }
@@ -79,7 +90,7 @@ public class ConferencesDAO {
                     }
                 }
             }catch(SQLException e){
-                logger.log(Level.SEVERE, "Error retrieving conference by ID: " + e.getMessage(), e);
+                logger.log(Level.SEVERE, "Error retrieving conference by ID: ", e);
                 throw e;
             }  
         return c;
@@ -102,7 +113,7 @@ public class ConferencesDAO {
                     conferences.add(c);
                 }
             }catch(SQLException e){
-                logger.log(Level.SEVERE, "Error retrieving conferences: " + e.getMessage(), e);
+                logger.log(Level.SEVERE, "Error retrieving conferences: ", e);
                 throw e;
             }
 

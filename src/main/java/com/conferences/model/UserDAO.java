@@ -53,11 +53,13 @@ public class UserDAO
     public boolean emailExists(String email)
     {
         String sql = "SELECT U_ID FROM Credentials WHERE Email_Address = ?";
-        try(Connection conn = DatabaseConnection.getConnection();PreparedStatement pstmt = conn.prepareStatement(sql))
+        try(Connection conn = DatabaseConnection.getConnection();
+            PreparedStatement pstmt = conn.prepareStatement(sql))
         {
             pstmt.setString(1,email);
-            ResultSet rs = pstmt.executeQuery();
-            return rs.next();
+            try(ResultSet rs = pstmt.executeQuery()){
+                return rs.next();
+            }
         }
         catch(SQLException e)
         {
@@ -94,12 +96,13 @@ public class UserDAO
                 pstmtUser.setString(3,role);
                 pstmtUser.executeUpdate();
 
-                ResultSet rs = pstmtUser.getGeneratedKeys();
+                try(ResultSet rs = pstmtUser.getGeneratedKeys()){
 
-                if(rs.next())
-                {
-                    userId = rs.getInt(1);
-                }
+                    if(rs.next())
+                    {
+                        userId = rs.getInt(1);
+                    }
+                 }
             }
 
             if(userId ==-1)
@@ -154,31 +157,32 @@ public class UserDAO
     //authenticate the user login
     public User authenticate(String email,String password)
     {
-        String sql = "SELECT u.U_ID, u.Full_Name,c.Email_Address,c.Password,u.Age,u.Role"+
-                     "FROM Users u JOIN Credentials c ON u.U_ID = c.U_ID"+
+        String sql = "SELECT u.U_ID, u.Full_Name,c.Email_Address,c.Password,u.Age,u.Role "+
+                     "FROM Users u JOIN Credentials c ON u.U_ID = c.U_ID "+
                      "WHERE c.Email_Address = ?";
 
         try(Connection conn = DatabaseConnection.getConnection();PreparedStatement pstmt = conn.prepareStatement(sql))
         {
             pstmt.setString(1, email);
-            ResultSet rs = pstmt.executeQuery();
+           try(ResultSet rs = pstmt.executeQuery()){
 
-            if(rs.next())
-            {
-                String storedHash = rs.getString("Password");
-
-                if(storedHash.equals(hashPassword(password)))
+                if(rs.next())
                 {
-                    return new User(
-                        rs.getInt("U_ID"),
-                        rs.getString("Full_Name"),
-                        rs.getString("Email_Address"),
-                        storedHash,
-                        rs.getInt("Age"),
+                    String storedHash = rs.getString("Password");
+
+                    if(storedHash.equals(hashPassword(password)))
+                    {
+                         return new User(
+                          rs.getInt("U_ID"),
+                          rs.getString("Full_Name"),
+                         rs.getString("Email_Address"),
+                         storedHash,
+                         rs.getInt("Age"),
                         rs.getString("Role")
                     );
-                }
+                    }
 
+                }
             }
         }
         catch(SQLException e)
