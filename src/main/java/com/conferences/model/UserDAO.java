@@ -45,7 +45,7 @@ public class UserDAO
 
         if(!emailExists(adminEmail))
         {
-            registerUser("System Admin", adminEmail,adminPassword,19,"Admin");
+            registerUser("System Admin", adminEmail,adminPassword,19,"ADMIN");
         }
     }
 
