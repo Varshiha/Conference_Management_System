@@ -50,9 +50,9 @@ public class UserDAO
             {  
               registerUser("System Admin", adminEmail,adminPassword,19,"ADMIN");
             }
-        }catch(SQLException e){
+        }catch(Exception e){
             logger.log(Level.SEVERE, "Error initializing the admin account: ", e);
-
+            
         }
     }
 
