@@ -7,9 +7,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public class UserDAO 
 {
+    private static final Logger logger = Logger.getLogger(UserDAO.class.getName());
 
     public UserDAO()
     {
@@ -63,7 +66,7 @@ public class UserDAO
         }
         catch(SQLException e)
         {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Error retrieving the email ", e);
             return false;
         }
     }
@@ -102,7 +105,7 @@ public class UserDAO
                     {
                         userId = rs.getInt(1);
                     }
-                 }
+                }
             }
 
             if(userId ==-1)
@@ -135,7 +138,7 @@ public class UserDAO
                     ex.printStackTrace();
                 }
             }
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Error registering the user profile: ", e);
             return false;
         }
         finally
@@ -148,7 +151,7 @@ public class UserDAO
                 }
                 catch(SQLException e)
                 {
-                    e.printStackTrace();
+                    logger.log(Level.SEVERE, "Error commiting the query: ", e);
                 }
             }
         }
@@ -187,7 +190,7 @@ public class UserDAO
         }
         catch(SQLException e)
         {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Error authenticating the user profile: ", e);
         }
         return null;
     }
@@ -204,7 +207,7 @@ public class UserDAO
         }
         catch(SQLException e)
         {
-            e.printStackTrace();
+            logger.log(Level.SEVERE, "Error updating the user profile: ", e);
             return false;
         }
     }
