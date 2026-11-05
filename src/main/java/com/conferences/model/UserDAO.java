@@ -45,10 +45,14 @@ public class UserDAO
     {
         String adminEmail = "admin@conference.com";
         String adminPassword = "AdminPassword123!";
+        try{
+             if(!emailExists(adminEmail))
+            {  
+              registerUser("System Admin", adminEmail,adminPassword,19,"ADMIN");
+            }
+        }catch(SQLException e){
+            logger.log(Level.SEVERE, "Error initializing the admin account: ", e);
 
-        if(!emailExists(adminEmail))
-        {
-            registerUser("System Admin", adminEmail,adminPassword,19,"ADMIN");
         }
     }
 
@@ -135,7 +139,7 @@ public class UserDAO
                 }
                 catch(SQLException ex)
                 {
-                    ex.printStackTrace();
+                    e.addSuppressed(ex);
                 }
             }
             logger.log(Level.SEVERE, "Error registering the user profile: ", e);
@@ -152,6 +156,14 @@ public class UserDAO
                 catch(SQLException e)
                 {
                     logger.log(Level.SEVERE, "Error commiting the query: ", e);
+                }
+                 try
+                {
+                    conn.close();
+                }
+                catch(SQLException e)
+                {
+                    logger.log(Level.SEVERE, "Error closing database connection: ", e);
                 }
             }
         }
