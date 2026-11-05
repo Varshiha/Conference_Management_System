@@ -27,17 +27,17 @@ CREATE TABLE IF NOT EXISTS "Credentials"(
 
 CREATE TABLE IF NOT EXISTS "Registrations"(
 	"R_ID" INTEGER PRIMARY KEY AUTOINCREMENT,
-	"U_ID" INTEGER NOT NULL,
 	"C_ID" INTEGER NOT NULL,
+	"U_ID" INTEGER NOT NULL,
 	"Registration_Date" TEXT NOT NULL,
 	"Status" TEXT NOT NULL CHECK ("Status" IN ('CONFIRMED', 'WAITLISTED', 'CANCELLED')),
 	"Waitlist_Position" INTEGER,
-	FOREIGN KEY ("U_ID") REFERENCES "Users"("U_ID") ON DELETE CASCADE,
 	FOREIGN KEY ("C_ID") REFERENCES "Conferences"("C_ID"),
+	FOREIGN KEY ("U_ID") REFERENCES "Users"("U_ID") ON DELETE CASCADE,
 	CHECK(("Status" = 'WAITLISTED' AND "Waitlist_Position" > 0) OR ("Status" != 'WAITLISTED' AND "Waitlist_Position"  IS NULL))
 );
 
 CREATE UNIQUE INDEX IF NOT EXISTS "Unique_Active_Reg"
-ON Registrations ("U_ID", "C_ID")
+ON Registrations ("C_ID", "U_ID")
 WHERE "Status" != 'CANCELLED';
 COMMIT;

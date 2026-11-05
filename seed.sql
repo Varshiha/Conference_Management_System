@@ -46,9 +46,7 @@ VALUES(2,'varchar@gmail.com','Charpass123!');
 INSERT INTO Credentials (U_ID,Email_Address,Password)
 VALUES(3,'broo@gmail.com','Bropass123!');
 
---REGISTRATION
-INSERT INTO Registrations (C_ID, U_ID, Registration_Date, Status, Waitlist_Position)
-VALUES (1, 2, '2026-11-01 10:30', 'CONFIRMED', NULL);
+--REGISTRATIONS
+INSERT INTO Registrations(C_ID, U_ID, Registration_Date, Status, Waitlist_Position)
+VALUES(5, 3, "2026-11-05 05:00", "CONFIRMED", null)
 
-INSERT INTO Registrations (C_ID, U_ID, Registration_Date, Status, Waitlist_Position)
-VALUES (2, 3, '2026-11-02 14:15', 'WAITLISTED', 1);
