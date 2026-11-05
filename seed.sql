@@ -3,8 +3,8 @@ DELETE FROM sqlite_sequence WHERE name = 'Conferences';
 DELETE FROM sqlite_sequence WHERE name = 'Users';
 DELETE FROM sqlite_sequence WHERE name = 'Registrations';
 
-DELETE FROM Conferences;
 DELETE FROM Registrations;
+DELETE FROM Conferences;
 DELETE FROM Credentials;
 DELETE FROM Users;
 
