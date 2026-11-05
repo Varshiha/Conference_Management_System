@@ -45,15 +45,12 @@ public class UserDAO
     {
         String adminEmail = "admin@conference.com";
         String adminPassword = "AdminPassword123!";
-        try{
+
              if(!emailExists(adminEmail))
             {  
               registerUser("System Admin", adminEmail,adminPassword,19,"ADMIN");
             }
-        }catch(SQLException e){
-            logger.log(Level.SEVERE, "Error initializing the admin account: ", e);
-
-        }
+        
     }
 
     //checking the existence of the email in the DB

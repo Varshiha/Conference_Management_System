@@ -30,7 +30,7 @@ VALUES("Advanced C# Course", 5, "2027-01-01 09:00", "2027-01-01 12:00", "Vanier"
 
 --USERS
 INSERT INTO Users(U_ID,Full_Name,Age,Role)
-VALUES(1,'Shreeji Patel',19,'ADMIN');
+VALUES(1,'Shreeraj Patel',19,'ADMIN');
 
 INSERT INTO Users(U_ID,Full_Name,Age,Role)
 VALUES(2,'Var Char',67,'PARTICIPANT');
