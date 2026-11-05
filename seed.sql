@@ -2,7 +2,13 @@
 DELETE FROM sqlite_sequence
 WHERE name = 'Conferences';
 
+DELETE FROM sqlite_sequence WHERE name = 'Users';
+DELETE FROM sqlite_sequence WHERE name = 'Registrations';
+
 DELETE FROM Conferences;
+DELETE FROM Registrations;
+DELETE FROM Users
+DELETE FROM Credentials;
 
 INSERT INTO Conferences (Title, Capacity, Start_DateTime, End_DateTime, Location)
 VALUES("Computer Science", 10, "2026-12-16 09:00", "2026-12-16 12:00", "Vanier");
@@ -21,3 +27,30 @@ VALUES("Database Management Workshop", 25, "2027-01-01 09:00", "2027-01-01 14:00
 
 INSERT INTO Conferences (Title, Capacity, Start_DateTime, End_DateTime, Location)
 VALUES("Advanced C# Course", 5, "2027-01-01 09:00", "2027-01-01 12:00", "Vanier");
+
+--USERS
+INSERT INTO Users(U_ID,Full_Name,Age,Role)
+VALUES(1,'Shreeji Patel',19,'ADMIN');
+
+INSERT INTO Users(U_ID,Full_Name,Age,Role)
+VALUES(2,'Var Char',67,'PARTICIPANT');
+
+INSERT INTO Users(U_ID,Full_Name,Age,Role)
+VALUES(1,'Daniel Ghosted',76,'PARTICIPANT');
+
+--CREDENTIALS
+INSERT INTO Credentials (U_ID,Email_Address,Password)
+VALUES(1,'admin@gmail.com','Adminpass123!');
+
+INSERT INTO Credentials (U_ID,Email_Address,Password)
+VALUES(2,'varchar@gmail.com','Charpass123!');
+
+INSERT INTO Credentials (U_ID,Email_Address,Password)
+VALUES(1,'broo@gmail.com','Bropass123!');
+
+--REGISTRATION
+INSERT INTO Registrations(C_ID,U_ID,Registration_Date,Status,Waitlist_Position)
+VALUES(1,2,'2026-11-01 10:30','CONFIRMED',NULL);
+
+INSERT INTO Registrations(C_ID,U_ID,Registration_Date,Status,Waitlist_Position)
+VALUES(2,3,'2026-11-02 14:15','WAITLISTED',1);
