@@ -7,7 +7,7 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.HBox?>
 
-<GridPane alignment="CENTER" hgap="10" vgap="10" xmlns="http://javafx.com" xmlns:fx="http://xml.com" fx:controller=""> // Put controller File Reference
+<GridPane alignment="CENTER" hgap="10" vgap="10" xmlns="http://javafx.com" xmlns:fx="http://xml.com" fx:controller="com.conferences.controllers.addUserController.java">
     <padding>
         <Insets bottom="20" left="20" right="20" top="20" />
     </padding>
