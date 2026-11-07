@@ -223,6 +223,23 @@ public class UserDAO
             return false;
         }
     }
+    public boolean updateUserCredentials(User user)
+    {
+        String sql = "UPDATE Credentials SET Email_Address = ?, Password = ? WHERE U_ID = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+             PreparedStatement p = conn.prepareStatement(sql))
+        {
+            p.setString(1, user.getEmail());
+            p.setString(2, hashPassword(user.getPassword()));
+            p.setInt(3, user.getId());
+            return p.executeUpdate()>0;
+        }
+        catch (SQLException e)
+        {
+            logger.log(Level.SEVERE, "Error updating user credentials: ", e);
+            return false;
+        }
+    }
 
 }
 
