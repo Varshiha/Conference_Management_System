@@ -49,11 +49,11 @@ VALUES(3,'broo@gmail.com','Bropass123!');
 
 --REGISTRATIONS
 INSERT INTO Registrations(C_ID, U_ID, Registration_Date, Status, Waitlist_Position)
-VALUES(5, 3, "2026-11-05 15:00", "CONFIRMED", null)
+VALUES(5, 3, "2026-11-05 15:00", "CONFIRMED", null);
 INSERT INTO Registrations(C_ID, U_ID, Registration_Date, Status, Waitlist_Position)
-VALUES(5, 1, "2026-12-05 18:00", "CONFIRMED", null)
+VALUES(5, 1, "2026-12-05 18:00", "CONFIRMED", null);
 INSERT INTO Registrations(C_ID, U_ID, Registration_Date, Status, Waitlist_Position)
-VALUES(5, 2, "2026-11-25 21:00", "WAITLISTED", 1)
+VALUES(5, 2, "2026-11-25 21:00", "WAITLISTED", 1);
 INSERT INTO Registrations(C_ID, U_ID, Registration_Date, Status, Waitlist_Position)
-VALUES(4, 1, "2026-11-05 09:00", "CONFIRMED", null)
+VALUES(4, 1, "2026-11-05 09:00", "CONFIRMED", null);
 
