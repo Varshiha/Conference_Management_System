@@ -1,5 +1,4 @@
 package com.conferences.tests;
-
 import com.conferences.model.User;
 import com.conferences.model.UserDAO;
 import org.junit.jupiter.api.Test;

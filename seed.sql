@@ -21,14 +21,15 @@ INSERT INTO Conferences (Title, Capacity, Start_DateTime, End_DateTime, Location
 VALUES("Cybersecurity Seminar", 20, "2026-12-07 12:00", "2026-12-07 15:00", "Montmorency College");
 
 INSERT INTO Conferences (Title, Capacity, Start_DateTime, End_DateTime, Location)
-VALUES("Database Management Workshop", 25, "2027-01-01 09:00", "2027-01-01 14:00", "Vanier");
+VALUES("Database Management Workshop", 2, "2027-01-01 09:00", "2027-01-01 14:00", "Vanier");
 
 INSERT INTO Conferences (Title, Capacity, Start_DateTime, End_DateTime, Location)
 VALUES("Advanced C# Course", 5, "2027-01-01 09:00", "2027-01-01 12:00", "Vanier");
 
+
 --USERS
 INSERT INTO Users(U_ID,Full_Name,Age,Role)
-VALUES(1,'Shreeraj Patel',19,'ADMIN');
+VALUES(1,'Shreeraj Patel',19,'PARTICIPANT');
 
 INSERT INTO Users(U_ID,Full_Name,Age,Role)
 VALUES(2,'Var Char',67,'PARTICIPANT');
@@ -48,5 +49,11 @@ VALUES(3,'broo@gmail.com','Bropass123!');
 
 --REGISTRATIONS
 INSERT INTO Registrations(C_ID, U_ID, Registration_Date, Status, Waitlist_Position)
-VALUES(5, 3, "2026-11-05 05:00", "CONFIRMED", null)
+VALUES(5, 3, "2026-11-05 15:00", "CONFIRMED", null)
+INSERT INTO Registrations(C_ID, U_ID, Registration_Date, Status, Waitlist_Position)
+VALUES(5, 1, "2026-12-05 18:00", "CONFIRMED", null)
+INSERT INTO Registrations(C_ID, U_ID, Registration_Date, Status, Waitlist_Position)
+VALUES(5, 2, "2026-11-25 21:00", "WAITLISTED", 1)
+INSERT INTO Registrations(C_ID, U_ID, Registration_Date, Status, Waitlist_Position)
+VALUES(4, 1, "2026-11-05 09:00", "CONFIRMED", null)
 
