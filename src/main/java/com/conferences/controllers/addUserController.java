@@ -31,11 +31,6 @@ public class addUserController {
 	@FXML
 	private void onCancel()
 	{
-		closeWindow();
-	}
-	
-	private void closeWindow()
-	{
 		Stage stage = (Stage) txtName.getScene().getWindow();
 		stage.close();
 	}
