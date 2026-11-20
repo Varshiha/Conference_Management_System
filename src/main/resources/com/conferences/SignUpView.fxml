@@ -16,7 +16,7 @@
             prefWidth="480" prefHeight="660"
             style="-fx-background-color: #FFFFFF;">
 
-    <!-- Top Crimson Banner -->
+    <!-- Top Banner -->
     <top>
         <HBox alignment="CENTER" prefHeight="64" style="-fx-background-color: #9E0B28;">
             <Label text="%app.title"
