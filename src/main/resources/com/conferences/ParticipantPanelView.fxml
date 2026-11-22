@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<VBox alignment="TOP_CENTER" spacing="10" xmlns="http://javafx.com" xmlns:fx="http://xml.com" fx:controller="com.conferences.model.ParticipantPanelController">
+    <padding>
+        <Insets bottom="15" left="15" right="15" top="15" />
+    </padding>
+
+    <Text text="%conf.heading" style="-fx-font-weight: bold; -fx-font-size: 14px;" />
+
+    <HBox alignment="CENTER_RIGHT" spacing="10">
+        <Button text="%lang.label" onAction="#" prefWidth="60" style="-fx-base: #e66f6f; -fx-text-fill: red;"/> //Add action
+    </HBox>
+
+    <TableView fx:id="tableConferences" VBox.vgrow="ALWAYS">
+        <columns>
+            <TableColumn fx:id="colId" text="ID" prefWidth="20"/>
+            <TableColumn fx:id="colTitle" text="%Name" prefWidth="100"/>
+            <TableColumn fx:id="colCapacity" text="%Capacity" prefWidth="30"/>
+            <TableColumn fx:id="colStartTime" text="%StartTime" prefWidth="60"/>
+            <TableColumn fx:id="colEndTime" text="%EndTime" prefWidth="60"/>
+            <TableColumn fx:id="colLocation" text="%Address" prefWidth="60"/>
+        </columns>
+    </TableView>
+
+    <HBox alignment="CENTER_RIGHT" spacing="10">
+        <Button text="%Cancel" onAction="#cancel" prefWidth="60" style="-fx-base: #e66f6f; -fx-text-fill: red;"/> //Cancel Button
+        <Button text="%login.button.switchToSignup" onAction="#register" prefWidth="60" style="-fx-base: #bb1a05; -fx-text-fill: white;"/> //Register
+        <Button text="%viewConfirmed" onAction="#listConfirmed" prefWidth="60" style="-fx-base: #2196F3; -fx-text-fill: white;"/> //View Confirmed
+        <Button text="%viewWaitlisted" onAction="#listWaitlisted" prefWidth="60" style="-fx-base: #2196F3; -fx-text-fill: white;"/> //View Waitlisted
+    </HBox>
+
+</VBox>
