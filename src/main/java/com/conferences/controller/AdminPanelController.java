@@ -4,6 +4,7 @@ import java.util.List;
 
 import com.conferences.DAO.ConferencesDAO;
 import com.conferences.model.Conference;
+import com.conferences.model.UserSession;
 import com.conferences.service.ConferenceServices;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.*;
@@ -64,6 +65,13 @@ public class AdminPanelController {
 
     @FXML 
     public void initialize() throws SQLException{
+
+        //this is a check to make sure only ADMIN can acess this
+        if(!UserSession.isAdmin())
+        {
+            //please redirect this back to the loginpage with an error
+        }
+
         idColumn.setCellValueFactory(new PropertyValueFactory<>("conferenceID"));
 		titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
 		capacityColumn.setCellValueFactory(new PropertyValueFactory<>("capacity"));
@@ -154,7 +162,12 @@ public class AdminPanelController {
     }
 
     @FXML
-    private void goToLogPage() {
+    private void goToLogPage() 
+    {
+        //this basically sets the current user to null
+        //check UserSession for more info
+        //u just need to add the switch back to log part
 
+        UserSession.clearSession();
     }
 }

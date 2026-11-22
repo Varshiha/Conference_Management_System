@@ -5,6 +5,7 @@ import java.time.LocalDateTime;
 import java.util.ResourceBundle;
 
 import com.conferences.model.Conference;
+import com.conferences.model.UserSession;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -42,6 +43,13 @@ public class ParticipantPanelController implements Initializable
     public void initialize(URL url, ResourceBundle bundle)
     {
         //TODO
+        if(!UserSession.isLoggedIn())
+        {
+            //pls do the same thing here swithc it back to log in page
+
+            //and pls when u add the logout button its gonna have 
+            // the same logic as the one in admin panel controller
+        }
     }
 
 
