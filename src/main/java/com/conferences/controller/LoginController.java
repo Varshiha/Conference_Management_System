@@ -126,7 +126,7 @@ public class LoginController implements Initializable
         String password ="";
         if(passwordField.getText() != null)
         {
-            password = passwordField.getText().trim();
+            password = passwordField.getText();
         }
 
         if(email.isEmpty() ||password.isEmpty())
@@ -142,11 +142,18 @@ public class LoginController implements Initializable
             errorLabel.setText(LocalizationManager.get("login.error.invalid"));
             return;
         }
+
+        
+        UserSession.setCurretUser(authenticatedUser);
         System.out.println("Logged in as: "+authenticatedUser.getFullName()+" ("+authenticatedUser.getRole()+")");
+       
 
         if (authenticatedUser.getRole().equals("ADMIN")){   
             switchScene(event, "/view/AdminPanel.fxml");
-        }   
+        }
+        if (authenticatedUser.getRole().equals("PARTICIPANT")){   
+            switchScene(event, "/view/ParticipantPanelView.fxml");
+        } 
     }
 
     @FXML 

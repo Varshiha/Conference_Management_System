@@ -192,7 +192,7 @@ public class SignUpController implements Initializable
 
         if (created) 
         {
-            switchScene(event, "/com/conferences/view/LoginView.fxml");    
+            switchScene(event, "/view/LoginView.fxml");    
         }
         else
         {
