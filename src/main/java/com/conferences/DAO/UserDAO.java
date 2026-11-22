@@ -233,7 +233,7 @@ public class UserDAO
              PreparedStatement p = conn.prepareStatement(sql))
         {
             p.setString(1, user.getEmail());
-            p.setString(2, hashPassword(user.getPassword()));
+            p.setString(2, user.getPassword());
             p.setInt(3, user.getId());
             return p.executeUpdate()>0;
         }
