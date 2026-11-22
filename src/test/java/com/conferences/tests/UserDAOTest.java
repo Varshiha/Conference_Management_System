@@ -62,4 +62,34 @@ public class UserDAOTest
         User loggedIn = userDAO.authenticate(email,"wrongpass1234");
         assertNull(loggedIn,"Authentication should fail because of the wrong password");
     }
+
+   @Test
+    public void testUpdateUserCredentials()
+    {
+        UserDAO userDAO = new UserDAO();
+        String email = "profile_" + System.currentTimeMillis() + "@gmail.com";
+
+        boolean created = userDAO.registerUser("mohammad guacamole", email, "OldPass123!", 21, "PARTICIPANT");
+        assertTrue(created);
+
+        User loggedIn = userDAO.authenticate(email, "OldPass123!");
+        assertNotNull(loggedIn);
+
+        loggedIn.setFullName("Mohammad Love Guacamole");
+        loggedIn.setAge(19);
+        boolean profileUpdated = userDAO.updateUserProfile(loggedIn);
+        assertTrue(profileUpdated);
+
+        String updatedEmail = "guac_" + System.currentTimeMillis() + "@gmail.com";
+        loggedIn.setEmail(updatedEmail);
+        loggedIn.setPassword("MoreGuac123!");
+        boolean credsUpdated = userDAO.updateUserCredentials(loggedIn);
+        assertTrue(credsUpdated);
+
+        User reLogin = userDAO.authenticate(updatedEmail, "MoreGuac123!");
+        assertNotNull(reLogin);
+        assertEquals("Mohammad Love Guacamole", reLogin.getFullName());
+        assertEquals(19, reLogin.getAge());
+        assertNotEquals("MoreGuac123!", reLogin.getPassword());
+    }
 }
