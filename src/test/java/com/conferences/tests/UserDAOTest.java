@@ -1,6 +1,7 @@
 package com.conferences.tests;
+import com.conferences.DAO.UserDAO;
 import com.conferences.model.User;
-import com.conferences.model.UserDAO;
+
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 public class UserDAOTest 

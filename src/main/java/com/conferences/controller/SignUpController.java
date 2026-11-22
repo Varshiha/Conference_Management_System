@@ -1,4 +1,5 @@
-package com.conferences.model;
+package com.conferences.controller;
+import com.conferences.DAO.UserDAO;
 import com.conferences.model.*;
 import java.io.IOException;
 import java.net.URL;
@@ -191,7 +192,7 @@ public class SignUpController implements Initializable
 
         if (created) 
         {
-            switchScene(event, "com/conference/model/LoginView.fxml");    
+            switchScene(event, "/com/conferences/view/LoginView.fxml");    
         }
         else
         {
@@ -202,7 +203,7 @@ public class SignUpController implements Initializable
     @FXML 
     private void handleSwitchToLogin(ActionEvent event)
     {
-        switchScene(event, "com/conference/model/LoginView.fxml");
+        switchScene(event, "/view/LoginView.fxml");
     }
 
     private void switchScene(ActionEvent event, String fxmlPath)

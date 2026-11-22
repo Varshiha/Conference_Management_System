@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.SplitMenuButton?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="505.0" prefWidth="1036.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.conferences.controller.AdminPanelController">
+   <children>
+      <Label layoutX="8.0" layoutY="5.0" prefHeight="67.0" prefWidth="1016.0" style="-fx-background-color: A20025; -fx-background-radius: 10px;" text="   Conference" textFill="WHITE">
+         <font>
+            <Font name="Century Gothic Bold" size="25.0" />
+         </font>
+      </Label>
+      <Label alignment="CENTER_RIGHT" layoutX="322.0" layoutY="18.0" prefHeight="42.0" prefWidth="688.0" text="Administrator Panel " textAlignment="RIGHT" textFill="WHITE">
+         <font>
+            <Font name="Century Gothic" size="20.0" />
+         </font>
+      </Label>
+      <TableView fx:id="conferenceTableView" layoutX="15.0" layoutY="141.0" prefHeight="298.0" prefWidth="996.0">
+        <columns>
+          <TableColumn fx:id="idColumn" prefWidth="34.79995536804199" text="ID" />
+          <TableColumn fx:id="titleColumn" prefWidth="201.5999870300293" text="Title" />
+            <TableColumn fx:id="capacityColumn" prefWidth="73.20002746582031" text="Capacity" />
+            <TableColumn fx:id="startColumn" prefWidth="118.80001831054688" text="Start Date &amp; Time" />
+            <TableColumn fx:id="endColumn" prefWidth="121.99993896484375" text="End Date &amp; Time" />
+            <TableColumn fx:id="venueColumn" prefWidth="112.00006103515625" text="Venue (optional)" />
+            <TableColumn fx:id="confirmedColumn" prefWidth="81.99993896484375" text="Confirmed" />
+            <TableColumn fx:id="waitlistedColumn" prefWidth="78.4000244140625" text="Waitlisted" />
+            <TableColumn fx:id="availableColumn" prefWidth="108.79998779296875" text="Available Seats" />
+            <TableColumn fx:id="fullColumn" prefWidth="64.0" text="Full?" />
+        </columns>
+      </TableView>
+      <Label fx:id="welcomeLabel" layoutX="15.0" layoutY="86.0" prefHeight="42.0" prefWidth="476.0" text=" Welcome, " textAlignment="RIGHT">
+         <font>
+            <Font name="Century Gothic" size="20.0" />
+         </font>
+      </Label>
+      <Button fx:id="createButton" layoutX="15.0" layoutY="462.0" mnemonicParsing="false" onAction="#createConferencePage" prefHeight="25.0" prefWidth="57.0" text="Create" />
+      <Button fx:id="editButton" layoutX="85.0" layoutY="462.0" mnemonicParsing="false" onAction="#editConferencePage" prefHeight="25.0" prefWidth="57.0" text="Edit" />
+      <Button fx:id="deleteButton" layoutX="155.0" layoutY="462.0" mnemonicParsing="false" onAction="#deleteConferencePage" prefHeight="25.0" prefWidth="57.0" text="Delete" />
+      <Button fx:id="refreshButton" layoutX="224.0" layoutY="462.0" mnemonicParsing="false" onAction="#refreshConferencePage" prefHeight="25.0" prefWidth="57.0" text="Refresh" />
+      <Button fx:id="reportsButton" layoutX="293.0" layoutY="462.0" mnemonicParsing="false" onAction="#reportsPage" text="Reports" />
+      <SplitMenuButton fx:id="englishSplitMenu" layoutX="865.0" layoutY="94.0" mnemonicParsing="false" text="English">
+        <items>
+          <MenuItem fx:id="englishMenuItem" mnemonicParsing="false" onAction="#englishLanguage" text="English" />
+          <MenuItem fx:id="frenchMenuItem" mnemonicParsing="false" onAction="#frenchLanguage" text="Français" />
+        </items>
+      </SplitMenuButton>
+      <Button fx:id="logoutButton" layoutX="952.0" layoutY="94.0" mnemonicParsing="false" onAction="#goToLogPage" text="Log out" />
+      <Label layoutX="795.0" layoutY="94.0" prefHeight="25.0" prefWidth="70.0" text="Languages" />
+   </children>
+</AnchorPane>

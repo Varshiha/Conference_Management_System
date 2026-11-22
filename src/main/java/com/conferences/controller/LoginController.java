@@ -1,5 +1,6 @@
-package com.conferences.model;
+package com.conferences.controller;
 
+import com.conferences.DAO.UserDAO;
 import com.conferences.model.*;
 
 import java.io.IOException;
@@ -92,8 +93,8 @@ public class LoginController implements Initializable
         headingLabel.setText(LocalizationManager.get("login.heading"));
         subheadingLabel.setText(LocalizationManager.get("login.subheading"));
         languageLabel.setText(LocalizationManager.get("lang.label"));
-        emailField.setText(LocalizationManager.get("login.email.prompt"));
-        passwordField.setText(LocalizationManager.get("login.password.prompt"));
+        emailField.setPromptText(LocalizationManager.get("login.email.prompt"));
+        passwordField.setPromptText(LocalizationManager.get("login.password.prompt"));
         loginButton.setText(LocalizationManager.get("login.button.submit"));
         switchToSignupButton.setText(LocalizationManager.get("login.button.switchToSignup"));
     }
@@ -131,10 +132,11 @@ public class LoginController implements Initializable
         if(email.isEmpty() ||password.isEmpty())
         {
             errorLabel.setText(LocalizationManager.get("login.error.empty"));
-
+            return;
         }
 
         User authenticatedUser = userDAO.authenticate(email, password);
+        
         if(authenticatedUser == null)
         {
             errorLabel.setText(LocalizationManager.get("login.error.invalid"));
@@ -142,12 +144,15 @@ public class LoginController implements Initializable
         }
         System.out.println("Logged in as: "+authenticatedUser.getFullName()+" ("+authenticatedUser.getRole()+")");
 
+        if (authenticatedUser.getRole().equals("ADMIN")){   
+            switchScene(event, "/view/AdminPanel.fxml");
+        }   
     }
 
     @FXML 
     private void handleSwitchToSignup(ActionEvent event)
     {
-        switchScene(event,"com/conference/model/SignUpView.fxml");
+        switchScene(event,"/view/SignUpView.fxml");
     }
 
     @FXML 
@@ -161,14 +166,18 @@ public class LoginController implements Initializable
             Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
             Scene currentScene = stage.getScene();
 
-            if(currentScene == null)
+            /*if(currentScene == null)
             {
                 stage.setScene(new Scene(root));
             }
             else
             {
                 currentScene.setRoot(root);
-            }
+            }*/
+
+                stage.setScene(new Scene(root));
+                stage.sizeToScene();
+                stage.centerOnScreen();
             stage.setTitle(LocalizationManager.get("app.title"));
         }
         catch(IOException e)

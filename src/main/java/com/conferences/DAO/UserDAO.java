@@ -1,4 +1,4 @@
-package com.conferences.model;
+package com.conferences.DAO;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -9,6 +9,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import com.conferences.model.DatabaseConnection;
+import com.conferences.model.User;
 
 public class UserDAO 
 {

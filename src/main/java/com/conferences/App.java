@@ -15,7 +15,7 @@ public class App extends Application{
 	@Override
 	public void start(Stage pStage) throws Exception
 	{
-		FXMLLoader l = new FXMLLoader(getClass().getResource("/com/conferences/LoginView.fxml"), LocalizationManager.getBundle());
+		FXMLLoader l = new FXMLLoader(getClass().getResource("/view/LoginView.fxml"), LocalizationManager.getBundle());
 		Parent r = l.load();
 
 		Scene scene = new Scene(r);

@@ -1,6 +1,7 @@
 package com.conferences.tests;
+import com.conferences.DAO.ConferencesDAO;
 import com.conferences.model.Conference;
-import com.conferences.model.ConferencesDAO;
+
 import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.time.LocalDateTime;

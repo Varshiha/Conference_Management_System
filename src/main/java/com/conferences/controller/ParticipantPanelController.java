@@ -1,8 +1,10 @@
-package com.conferences.model;
+package com.conferences.controller;
 
 import java.net.URL;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
+
+import com.conferences.model.Conference;
 
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

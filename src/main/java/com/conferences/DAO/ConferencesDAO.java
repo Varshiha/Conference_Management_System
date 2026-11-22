@@ -1,4 +1,4 @@
-package com.conferences.model;
+package com.conferences.DAO;
 import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -10,6 +10,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import com.conferences.model.Conference;
+import com.conferences.model.DatabaseConnection;
 
 public class ConferencesDAO {
 
