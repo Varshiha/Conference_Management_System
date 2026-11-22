@@ -5,7 +5,7 @@ import java.util.ResourceBundle;
 
 public  final class LocalizationManager 
 {
-    private static final String BUNDLE_BASE_NAME = "com.conference.messages";
+    private static final String BUNDLE_BASE_NAME = "com.conferences.messages";
     private static Locale currentLocale = Locale.ENGLISH;
     private static ResourceBundle bundle = ResourceBundle.getBundle(BUNDLE_BASE_NAME,currentLocale);
 
