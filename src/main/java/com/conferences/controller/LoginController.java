@@ -63,7 +63,6 @@ public class LoginController implements Initializable
     @Override 
     public void initialize(URL location, ResourceBundle resouces) 
     {
-        // Hint: initialize() will be called when the associated FXML has been completely loaded.
         languageMap.put("English", Locale.ENGLISH);
         languageMap.put("Français", Locale.FRENCH);
 
