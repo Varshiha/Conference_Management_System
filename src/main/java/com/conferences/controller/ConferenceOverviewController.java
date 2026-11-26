@@ -10,7 +10,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import com.conferences.model.LocalizationManager;
 
-public class ConferenceOverviewController {
+public class ConferenceOverviewController implements Report{
     @FXML 
     private TableView<Conference> conferenceTableView;
     @FXML 
@@ -27,6 +27,7 @@ public class ConferenceOverviewController {
     private Button closeCOButton;
     private ConferencesDAO db = new ConferencesDAO();
     private ConferenceServices service = new ConferenceServices();
+    private Stage reportStage;
 
     @FXML 
     public void initialize() throws SQLException{
@@ -51,5 +52,13 @@ public class ConferenceOverviewController {
     public void closeConferenceOverview(){
         Stage stage = (Stage) closeCOButton.getScene().getWindow();
         stage.close();
+    }
+
+    @Override 
+    public void setStage(Stage stage){
+        this.reportStage = stage;
+    }
+    @Override public void showReport(){
+        reportStage.show();
     }
 }

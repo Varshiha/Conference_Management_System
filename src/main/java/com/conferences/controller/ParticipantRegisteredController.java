@@ -16,7 +16,7 @@ import javafx.stage.Stage;
 import javafx.beans.property.SimpleStringProperty;
 import com.conferences.model.LocalizationManager;
 
-public class ParticipantRegisteredController {
+public class ParticipantRegisteredController implements Report{
     @FXML 
     private ComboBox<String> participantComboBox;
     @FXML
@@ -37,6 +37,8 @@ public class ParticipantRegisteredController {
     private List<User> participants;
     private int selectedIndex;
     private User selectedParticipant;
+    private Stage reportStage;
+
 
     @FXML 
     public void initialize() throws SQLException{
@@ -89,5 +91,13 @@ public class ParticipantRegisteredController {
     public void closeParticipantRegistered(){
         Stage stage = (Stage) closePRButton.getScene().getWindow();
         stage.close();
+    }
+    
+    @Override 
+    public void setStage(Stage stage){
+        this.reportStage = stage;
+    }
+    @Override public void showReport(){
+        reportStage.show();
     }
 }

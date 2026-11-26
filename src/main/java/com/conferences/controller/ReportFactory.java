@@ -8,7 +8,7 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 public class ReportFactory {
-    public static Stage createReport(int type) throws Exception{
+    public static Report createReport(int type) throws Exception{
         String path;
         String title;
 
@@ -46,7 +46,9 @@ public class ReportFactory {
         Stage stage = new Stage();
         stage.setTitle(LocalizationManager.get(title));
         stage.setScene(new Scene(root));
-
-        return stage;
+        //Get the controller
+        Report report = loader.getController();
+        report.setStage(stage);
+        return report;
     }
 }

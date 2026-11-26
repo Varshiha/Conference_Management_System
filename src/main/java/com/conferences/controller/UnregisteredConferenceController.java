@@ -9,7 +9,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
-public class UnregisteredConferenceController {
+public class UnregisteredConferenceController implements Report{
     @FXML 
     private TableView<Conference> conferenceTableView;
     @FXML 
@@ -19,6 +19,8 @@ public class UnregisteredConferenceController {
     @FXML 
     private Button closeUCButton;
     private ConferenceServices service = new ConferenceServices();
+    private Stage reportStage;
+
 
     @FXML 
     public void initialize() throws SQLException{
@@ -37,5 +39,13 @@ public class UnregisteredConferenceController {
     public void closeUnregisteredConference(){
         Stage stage = (Stage) closeUCButton.getScene().getWindow();
         stage.close();
+    }
+    
+    @Override 
+    public void setStage(Stage stage){
+        this.reportStage = stage;
+    }
+    @Override public void showReport(){
+        reportStage.show();
     }
 }

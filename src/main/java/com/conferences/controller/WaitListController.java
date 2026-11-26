@@ -11,7 +11,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
-public class WaitListController {
+public class WaitListController implements Report{
     @FXML 
     private ComboBox<String> conferenceComboBox;
     @FXML
@@ -29,6 +29,7 @@ public class WaitListController {
     private List<Conference> conferences;
     private int selectedIndex;
     private Conference selectedConference;
+    private Stage reportStage;
 
     @FXML 
     public void initialize() throws SQLException{
@@ -58,5 +59,13 @@ public class WaitListController {
     public void closeWaitListReport(){
         Stage stage = (Stage) closeWButton.getScene().getWindow();
         stage.close();
+    }
+    
+    @Override 
+    public void setStage(Stage stage){
+        this.reportStage = stage;
+    }
+    @Override public void showReport(){
+        reportStage.show();
     }
 }

@@ -12,7 +12,7 @@ public class ReportsController {
     private Button okButton;
     @FXML 
     private Button cancelButton;
-    ConferenceServices service;
+    ConferenceServices service = new ConferenceServices();
 
     public void initialize(){
         reportsOptionComboBox.getItems().addAll(
@@ -28,12 +28,12 @@ public class ReportsController {
     @FXML 
     public void okReport() throws Exception{
         int selectedIndex = reportsOptionComboBox.getSelectionModel().getSelectedIndex();
-        Stage stage = ReportFactory.createReport(selectedIndex);
-        if(stage == null){
+        Report report = ReportFactory.createReport(selectedIndex);
+        if(report == null){
             service.alertMessage(LocalizationManager.get("report.alert.select"), Alert.AlertType.ERROR);
             return; 
         }
-        stage.show();
+        report.showReport();
     }
 
     @FXML 

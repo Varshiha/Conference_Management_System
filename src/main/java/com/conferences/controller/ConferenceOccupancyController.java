@@ -11,7 +11,7 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
-public class ConferenceOccupancyController {
+public class ConferenceOccupancyController implements Report{
      @FXML 
     private ComboBox<String> conferenceComboBox;
     @FXML 
@@ -27,6 +27,7 @@ public class ConferenceOccupancyController {
     private List<Conference> conferences;
     private int selectedIndex;
     private Conference selectedConference;
+    private Stage reportStage;
 
     @FXML 
     public void initialize() throws SQLException{
@@ -57,5 +58,13 @@ public class ConferenceOccupancyController {
     public void closeConferenceOccupancy(){
         Stage stage = (Stage) closeCOcButton.getScene().getWindow();
         stage.close();
+    }
+
+    @Override 
+    public void setStage(Stage stage){
+        this.reportStage = stage;
+    }
+    @Override public void showReport(){
+        reportStage.show();
     }
 }
