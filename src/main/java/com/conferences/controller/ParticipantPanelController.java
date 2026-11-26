@@ -23,7 +23,6 @@ import javafx.stage.Stage;
 
 public class ParticipantPanelController implements Initializable
 {
-
     @FXML private TableView<Conference> tableConferences;
     @FXML private TableColumn<Conference, Integer> colId;
     @FXML private TableColumn<Conference, String> colTitle;
@@ -33,8 +32,7 @@ public class ParticipantPanelController implements Initializable
     @FXML private TableColumn<Conference, String> colLocation;
     
     @Override
-    @FXML
-    public void initialize(URL url, ResourceBundle bundle)
+    @FXML public void initialize(URL url, ResourceBundle bundle)
     {
         colId.setCellValueFactory(new PropertyValueFactory<>("conferenceID"));
         colTitle.setCellValueFactory(new PropertyValueFactory<>("title"));
@@ -43,11 +41,8 @@ public class ParticipantPanelController implements Initializable
         colEndTime.setCellValueFactory(new PropertyValueFactory<>("endDateTime"));
         colLocation.setCellValueFactory(new PropertyValueFactory<>("location"));
 
-        try {
-            loadData();
-        } catch (SQLException e) {
-            System.err.print(e);
-        }
+        try {loadData();} 
+        catch (SQLException e) {System.err.print(e);}
     }
 
     private void loadData() throws SQLException
@@ -71,9 +66,9 @@ public class ParticipantPanelController implements Initializable
                     dList.add(new Conference(id, title, cap, startTime, endTime, location));
                 }
                 tableConferences.setItems(dList);
-            } catch(SQLException e){
-                throw e;
-            }
+
+            } catch(SQLException e){throw e;}
+
         //TODO
         if(!UserSession.isLoggedIn()) //I'll move to correct spot later - Daniel
         {
@@ -93,11 +88,10 @@ public class ParticipantPanelController implements Initializable
         s.close();
     }
 
-
-    // These 3 will change a flag int (will add later) and that will change the sql in loadData().
-
     @SuppressWarnings("unused")
     @FXML private void register(){}
+
+    // These first 2 will change a flag int (will add later) and that will change the sql in loadData().
     @SuppressWarnings("unused")
     @FXML private void listConfirmed(){}
     @SuppressWarnings("unused")
