@@ -7,8 +7,7 @@ import java.sql.SQLException;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
-import java.util.logging.Logger;
-
+import com.conferences.service.ApplicationLogger;
 import com.conferences.model.DatabaseConnection;
 import com.conferences.model.Registration;
 
@@ -20,8 +19,7 @@ import java.util.ArrayList;
 public class RegistrationsDAO {
      
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");   
-    private static final Logger logger = Logger.getLogger(RegistrationsDAO.class.getName());
-
+    private static final ApplicationLogger logger = ApplicationLogger.getInstance();
     //Create operation
     public boolean addRegistration(Registration r) throws SQLException {
          String sql = "INSERT INTO Registrations (C_ID, U_ID, Registration_Date, Status, Waitlist_Position) VALUES(?,?,?,?,?)";

@@ -5,7 +5,6 @@ import javafx.stage.Stage;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.sql.SQLException;
-
 import com.conferences.DAO.ConferencesDAO;
 import com.conferences.model.*;
 import com.conferences.service.ConferenceServices;

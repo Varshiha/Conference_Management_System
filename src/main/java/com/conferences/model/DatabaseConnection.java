@@ -4,13 +4,13 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.logging.Level;
-import java.util.logging.Logger;
+import com.conferences.service.ApplicationLogger;
 
 
 public class DatabaseConnection {
 
     private static final String URL = "jdbc:sqlite:Conferences.db";
-    private static final Logger logger = Logger.getLogger(DatabaseConnection.class.getName());
+    private static final ApplicationLogger logger = ApplicationLogger.getInstance();
 
     public static Connection getConnection()throws SQLException {
         Connection con = DriverManager.getConnection(URL);

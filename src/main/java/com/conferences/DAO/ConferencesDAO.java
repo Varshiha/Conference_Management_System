@@ -9,13 +9,13 @@ import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
-import java.util.logging.Logger;
+import com.conferences.service.ApplicationLogger;
 import com.conferences.model.Conference;
 import com.conferences.model.DatabaseConnection;
 
 public class ConferencesDAO {
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");   
-    private static final Logger logger = Logger.getLogger(ConferencesDAO.class.getName());
+    private static final ApplicationLogger logger = ApplicationLogger.getInstance();
 
     public boolean addConference(Conference c) throws SQLException {
         String sql = "INSERT INTO Conferences (Title, Capacity, Start_DateTime, End_DateTime, Location) VALUES(?,?,?,?,?)";

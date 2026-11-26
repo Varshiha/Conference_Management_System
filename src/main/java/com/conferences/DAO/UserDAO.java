@@ -9,15 +9,14 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
+import com.conferences.service.ApplicationLogger;
 import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import com.conferences.model.DatabaseConnection;
 import com.conferences.model.User;
 
 public class UserDAO 
 {
-    private static final Logger logger = Logger.getLogger(UserDAO.class.getName());
+    private static final ApplicationLogger logger = ApplicationLogger.getInstance();
 
     public UserDAO()
     {

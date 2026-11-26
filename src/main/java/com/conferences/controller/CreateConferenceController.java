@@ -92,10 +92,11 @@ public class CreateConferenceController {
         Conference conference = new Conference(title, capacity, start, end, venue);
         ConferencesDAO db = new ConferencesDAO();
         try{
-            db.addConference(conference);
-           service.alertMessage(LocalizationManager.get("conf.create.success"), Alert.AlertType.INFORMATION);
-            Stage stage = (Stage) createButton.getScene().getWindow();
-            stage.close();
+            if(db.addConference(conference)){
+                service.alertMessage(LocalizationManager.get("conf.create.success"), Alert.AlertType.INFORMATION);
+                Stage stage = (Stage) createButton.getScene().getWindow();
+                stage.close();
+            }
         }catch(SQLException e){
             service.alertMessage(LocalizationManager.get("conf.create.error") + " " + e.getMessage(), Alert.AlertType.ERROR);
         }

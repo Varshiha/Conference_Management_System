@@ -1,6 +1,6 @@
 package com.conferences.controller;
-import java.util.logging.Logger;
 import java.util.logging.Level;
+import com.conferences.service.ApplicationLogger;
 import javafx.application.Platform;
 import java.sql.SQLException;
 import java.util.List;
@@ -17,7 +17,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import com.conferences.model.LocalizationManager;
 import java.util.Locale;
 
-public class AdminPanelController {
+public class AdminPanelController{
     @FXML 
     private TableView<Conference> conferenceTableView;
     @FXML 
@@ -66,7 +66,7 @@ public class AdminPanelController {
     private Label adminHeadingLabel;
     @FXML
     private Label languageLabel;
-    private static final Logger logger = Logger.getLogger(AdminPanelController.class.getName());
+    private static final ApplicationLogger logger = ApplicationLogger.getInstance();
     private ConferencesDAO db = new ConferencesDAO();
     private ConferenceServices service = new ConferenceServices();
 
@@ -180,7 +180,7 @@ public class AdminPanelController {
                 }
             }
         }catch(SQLException e){
-                    service.alertMessage(LocalizationManager.get("admin.alert.delete,error") + " " + e.getMessage(), Alert.AlertType.ERROR);
+                    service.alertMessage(LocalizationManager.get("admin.alert.delete.error") + " " + e.getMessage(), Alert.AlertType.ERROR);
         }
     }
 
@@ -192,7 +192,13 @@ public class AdminPanelController {
             c.setConfirmed(service.getConfirmedCount(id));
             c.setWaitlisted(service.getWaitlistedCount(id));
             c.setAvailable(service.getAvailableSeats(id, c.getCapacity()));
-            c.setFull(service.isConferenceFull(id, c.getCapacity()));
+            boolean full = service.isConferenceFull(id, c.getCapacity());
+            c.setFull(full);
+            if(full){
+                c.setFullStatus(LocalizationManager.get("admin.full.true"));
+            }else{
+                c.setFullStatus(LocalizationManager.get("admin.full.false"));
+            }
         }
 		conferenceTableView.getItems().setAll(conferences);	
     }
@@ -224,6 +230,7 @@ public class AdminPanelController {
         Parent root = loader.load();
         Stage stage = (Stage) englishSplitMenu.getScene().getWindow();
         stage.setScene(new Scene(root));
+
     }
 
     @FXML
