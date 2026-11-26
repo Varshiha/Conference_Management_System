@@ -234,12 +234,16 @@ public class UserDAO
         {
             return false;
         }
+
+        String pwd = user.getPassword();
+        String passwordToStore = pwd.matches("^[a-fA-F0-9]{64}$")?pwd : hashPassword(pwd);
+
         String sql = "UPDATE Credentials SET Email_Address = ?, Password = ? WHERE U_ID = ?";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement p = conn.prepareStatement(sql))
         {
             p.setString(1, user.getEmail());
-            p.setString(2, hashPassword(user.getPassword()));
+            p.setString(2,passwordToStore);
             p.setInt(3, user.getId());
             return p.executeUpdate()>0;
         }
