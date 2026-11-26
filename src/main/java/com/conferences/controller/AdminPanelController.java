@@ -1,7 +1,9 @@
 package com.conferences.controller;
+import java.util.logging.Logger;
+import java.util.logging.Level;
+import javafx.application.Platform;
 import java.sql.SQLException;
 import java.util.List;
-
 import com.conferences.DAO.ConferencesDAO;
 import com.conferences.model.Conference;
 import com.conferences.model.UserSession;
@@ -12,10 +14,10 @@ import javafx.stage.Stage;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
- 
+import com.conferences.model.LocalizationManager;
+import java.util.Locale;
 
 public class AdminPanelController {
-
     @FXML 
     private TableView<Conference> conferenceTableView;
     @FXML 
@@ -37,7 +39,7 @@ public class AdminPanelController {
     @FXML 
     private TableColumn<Conference, Integer> availableColumn;
     @FXML 
-    private TableColumn<Conference, Boolean> fullColumn;  
+    private TableColumn<Conference, String> fullColumn;  
     @FXML 
     private Label welcomeLabel;
     @FXML 
@@ -58,37 +60,76 @@ public class AdminPanelController {
     private MenuItem englishMenuItem;
     @FXML
     private MenuItem frenchMenuItem;
-
+    @FXML
+    private Label conferenceBannerLabel;
+    @FXML
+    private Label adminHeadingLabel;
+    @FXML
+    private Label languageLabel;
+    private static final Logger logger = Logger.getLogger(AdminPanelController.class.getName());
     private ConferencesDAO db = new ConferencesDAO();
     private ConferenceServices service = new ConferenceServices();
 
-
     @FXML 
     public void initialize() throws SQLException{
-
-        //this is a check to make sure only ADMIN can acess this
+        conferenceTableView.setPlaceholder(new Label(LocalizationManager.get("report.empty")));
         if(!UserSession.isAdmin())
         {
-            //please redirect this back to the loginpage with an error
+            Platform.runLater(() -> {
+                service.alertMessage(LocalizationManager.get("alert.unauthorized.admin"), Alert.AlertType.ERROR);
+                try{
+                    goToLogPage();
+
+                }catch(Exception e){
+                    logger.log(Level.SEVERE, "Error redirecting to login page", e);
+                }
+            });
+            return;
+        }
+        welcomeLabel.setText(LocalizationManager.get("admin.welcome")+ " " + UserSession.getCurrentUser().getFullName());        
+		
+        if (LocalizationManager.getLocale().getLanguage().equals("fr")) {
+            englishSplitMenu.setText("Français");
+        } else {
+            englishSplitMenu.setText("English");
         }
 
         idColumn.setCellValueFactory(new PropertyValueFactory<>("conferenceID"));
-		titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
+        titleColumn.setCellValueFactory(new PropertyValueFactory<>("title"));
 		capacityColumn.setCellValueFactory(new PropertyValueFactory<>("capacity"));
         startColumn.setCellValueFactory(new PropertyValueFactory<>("startDateTime"));
 		endColumn.setCellValueFactory(new PropertyValueFactory<>("endDateTime"));
 		venueColumn.setCellValueFactory(new PropertyValueFactory<>("location"));
+		confirmedColumn.setCellValueFactory(new PropertyValueFactory<>("confirmed"));
+        waitlistedColumn.setCellValueFactory(new PropertyValueFactory<>("waitlisted"));
+        availableColumn.setCellValueFactory(new PropertyValueFactory<>("available"));
+		fullColumn.setCellValueFactory(new PropertyValueFactory<>("fullStatus"));
+
 		List<Conference> conferences = db.getAllConferences();
+        for(Conference c : conferences){
+            int id = c.getConferenceID();
+            c.setConfirmed(service.getConfirmedCount(id));
+            c.setWaitlisted(service.getWaitlistedCount(id));
+            c.setAvailable(service.getAvailableSeats(id, c.getCapacity()));
+            boolean full = service.isConferenceFull(id, c.getCapacity());
+            c.setFull(full);
+            if(full){
+                c.setFullStatus(LocalizationManager.get("admin.full.true"));
+            }else{
+                c.setFullStatus(LocalizationManager.get("admin.full.false"));
+            }
+        }
 		conferenceTableView.getItems().setAll(conferences);	
     }
 
     @FXML
     private void createConferencePage() throws Exception{
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/CreateConference.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/CreateConference.fxml"), LocalizationManager.getBundle());
         Parent root = loader.load();
         Stage stage = new Stage();
-        stage.setTitle("Create Conference");
+        stage.setTitle(LocalizationManager.get("conf.create.heading"));
         stage.setScene(new Scene(root));
+        stage.setResizable(false);
         stage.show();
     }
 
@@ -96,17 +137,17 @@ public class AdminPanelController {
     private void editConferencePage()  throws Exception{
         Conference selectedConference = conferenceTableView.getSelectionModel().getSelectedItem();
         if(selectedConference == null){
-            service.alertMessage("Please select a conference to edit", Alert.AlertType.ERROR);
+            service.alertMessage(LocalizationManager.get("admin.alert.edit.select"), Alert.AlertType.ERROR);
             return;
         }
-
-        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/EditConference.fxml"));
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/EditConference.fxml"), LocalizationManager.getBundle());
         Parent root = loader.load();
         EditConferenceController editController = loader.getController();
         editController.setConference(selectedConference);
         Stage stage = new Stage();
-        stage.setTitle("Edit Conference");
+        stage.setTitle(LocalizationManager.get("conf.edit.heading"));
         stage.setScene(new Scene(root));
+        stage.setResizable(false);
         stage.show();
     }
 
@@ -114,7 +155,7 @@ public class AdminPanelController {
     private void deleteConferencePage() throws SQLException{
         Conference selectedConference = conferenceTableView.getSelectionModel().getSelectedItem();
         if(selectedConference == null){
-            service.alertMessage("Please select a conference to delete", Alert.AlertType.ERROR);
+            service.alertMessage(LocalizationManager.get("admin.alert.delete.select"), Alert.AlertType.ERROR);
             return;
         }
         try {
@@ -124,50 +165,76 @@ public class AdminPanelController {
                 return;
             }
             Alert confirmation = new Alert(Alert.AlertType.CONFIRMATION);
-            confirmation.setTitle("Delete conference");
-            confirmation.setHeaderText("Are you sure you want to delete this conference?");
+            confirmation.setTitle(LocalizationManager.get("admin.alert.delete.title"));
+            confirmation.setHeaderText(LocalizationManager.get("admin.alert.delete.confirm"));
+            Button cancel = (Button) confirmation.getDialogPane().lookupButton(ButtonType.CANCEL);
+            cancel.setText(LocalizationManager.get("dialog.button.cancel"));
             confirmation.showAndWait();
             if(confirmation.getResult() == ButtonType.OK){
                 boolean deleted = db.deleteConference(selectedConference.getConferenceID());
                 if(deleted){
-                    service.alertMessage("Conference deleted successfully!", Alert.AlertType.INFORMATION);
+                    service.alertMessage(LocalizationManager.get("admin.alert.delete.success"), Alert.AlertType.INFORMATION);
                     refreshConferencePage();
                 }else{
-                    service.alertMessage("Conference could not be deleted", Alert.AlertType.ERROR);
+                    service.alertMessage(LocalizationManager.get("admin.alert.delete.failed"), Alert.AlertType.ERROR);
                 }
             }
         }catch(SQLException e){
-                    service.alertMessage("Error deleting conference: " + e.getMessage(), Alert.AlertType.ERROR);
+                    service.alertMessage(LocalizationManager.get("admin.alert.delete,error") + " " + e.getMessage(), Alert.AlertType.ERROR);
         }
     }
 
     @FXML
     private void refreshConferencePage() throws SQLException{
         List<Conference> conferences = db.getAllConferences();
+        for(Conference c : conferences){
+            int id = c.getConferenceID();
+            c.setConfirmed(service.getConfirmedCount(id));
+            c.setWaitlisted(service.getWaitlistedCount(id));
+            c.setAvailable(service.getAvailableSeats(id, c.getCapacity()));
+            c.setFull(service.isConferenceFull(id, c.getCapacity()));
+        }
 		conferenceTableView.getItems().setAll(conferences);	
     }
 
     @FXML
-    private void reportsPage() {
-
+    private void reportsPage() throws Exception{
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Reports.fxml"), LocalizationManager.getBundle());
+        Parent root = loader.load();
+        Stage stage = new Stage();
+        stage.setTitle(LocalizationManager.get("report.heading"));
+        stage.setScene(new Scene(root));
+        stage.setResizable(false);
+        stage.show();
     }
     @FXML
-    private void englishLanguage() {
-
+    private void englishLanguage() throws Exception{
+        LocalizationManager.setLocale(Locale.ENGLISH);
+        reloadAdminPanel();
     }
 
     @FXML
-    private void frenchLanguage() {
+    private void frenchLanguage() throws Exception{
+        LocalizationManager.setLocale(Locale.FRENCH);
+        reloadAdminPanel();
+    }
 
+    private void reloadAdminPanel() throws Exception{
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/AdminPanel.fxml"), LocalizationManager.getBundle());
+        Parent root = loader.load();
+        Stage stage = (Stage) englishSplitMenu.getScene().getWindow();
+        stage.setScene(new Scene(root));
     }
 
     @FXML
-    private void goToLogPage() 
-    {
-        //this basically sets the current user to null
-        //check UserSession for more info
-        //u just need to add the switch back to log part
-
+    private void goToLogPage() throws Exception{
         UserSession.clearSession();
+        FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/LoginView.fxml"),LocalizationManager.getBundle());
+        Parent root = loader.load();
+        Stage stage = (Stage) logoutButton.getScene().getWindow();
+        stage.setScene(new Scene(root));
+        stage.sizeToScene();
+        stage.centerOnScreen();
+        stage.setTitle(LocalizationManager.get("app.title"));
     }
 }

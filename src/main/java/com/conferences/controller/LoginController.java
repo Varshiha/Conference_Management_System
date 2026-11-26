@@ -171,7 +171,7 @@ public class LoginController implements Initializable
             FXMLLoader loader = new FXMLLoader(fxmlURL, LocalizationManager.getBundle());
             Parent root = loader.load();
             Stage stage = (Stage)((Node) event.getSource()).getScene().getWindow();
-            Scene currentScene = stage.getScene();
+           // Scene currentScene = stage.getScene();
 
             /*if(currentScene == null)
             {

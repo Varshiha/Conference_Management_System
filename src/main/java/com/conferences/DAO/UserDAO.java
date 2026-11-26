@@ -7,6 +7,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -247,6 +249,57 @@ public class UserDAO
             return false;
         }
     }
+
+    public User getUserById(int userId) throws SQLException{
+        String sql = "SELECT u.U_ID, u.Full_Name, u.Age, u.Role, " +
+                 "c.Email_Address " +
+                 "FROM Users u LEFT JOIN Credentials c ON u.U_ID = c.U_ID " +
+                 "WHERE u.U_ID = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+                pstmt.setInt(1, userId);
+
+                try (ResultSet rs = pstmt.executeQuery()) {
+                    if (rs.next()) {
+                        return new User(
+                            rs.getInt("U_ID"),
+                            rs.getString("Full_Name"),
+                            rs.getString("Email_Address"),
+                            null,
+                            rs.getInt("Age"),
+                            rs.getString("Role")
+                        );
+                    }
+                }
+            }
+        return null;
+    }
+
+    public List<User> getAllParticipants() throws SQLException{
+        String sql = "SELECT u.U_ID, u.Full_Name, u.Age, u.Role, c.Email_Address From Users u LEFT JOIN Credentials c ON u.U_ID = c.U_ID WHERE u.Role = 'PARTICIPANT'";
+        List<User> participants = new ArrayList<>();
+        
+        try (Connection conn = DatabaseConnection.getConnection();
+         PreparedStatement pstmt = conn.prepareStatement(sql);
+         ResultSet rs = pstmt.executeQuery()) {
+
+        while (rs.next()) {
+            User user = new User(
+                rs.getInt("U_ID"),
+                rs.getString("Full_Name"),
+                rs.getString("Email_Address"),
+                null,
+                rs.getInt("Age"),
+                rs.getString("Role"));
+
+                 participants.add(user);
+            }
+        }
+        return participants;
+    }
+
+    
 
 }
 

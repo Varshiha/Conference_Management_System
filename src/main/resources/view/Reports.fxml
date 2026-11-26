@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ComboBox?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="160.0" prefWidth="490.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.conferences.controller.ReportsController">
+   <children>
+      <Button fx:id="okButton" layoutX="253.0" layoutY="95.0" mnemonicParsing="false" onAction="#okReport" prefHeight="25.0" prefWidth="98.0" text="OK" />
+      <Button fx:id="cancelButton" layoutX="363.0" layoutY="95.0" mnemonicParsing="false" onAction="#cancelReport" prefHeight="25.0" prefWidth="98.0" text="%Cancel" />
+      <Label alignment="CENTER" layoutX="15.0" layoutY="14.0" prefHeight="25.0" prefWidth="460.0" style="-fx-background-color: #A20025; -fx-background-radius: 5px;" text="%report.heading" textFill="WHITE">
+         <font>
+            <Font name="Century Gothic Bold" size="14.0" />
+         </font>
+      </Label>
+      <Label layoutX="29.0" layoutY="55.0" prefHeight="25.0" prefWidth="155.0" text="%report.select" />
+      <ComboBox fx:id="reportsOptionComboBox" layoutX="184.0" layoutY="55.0" prefHeight="25.0" prefWidth="277.0" />
+   </children>
+</AnchorPane>

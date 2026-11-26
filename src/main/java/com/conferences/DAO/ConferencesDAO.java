@@ -14,7 +14,6 @@ import com.conferences.model.Conference;
 import com.conferences.model.DatabaseConnection;
 
 public class ConferencesDAO {
-
     private static final DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm");   
     private static final Logger logger = Logger.getLogger(ConferencesDAO.class.getName());
 
@@ -100,7 +99,7 @@ public class ConferencesDAO {
 
     public List<Conference> getAllConferences() throws SQLException {
         List<Conference> conferences = new ArrayList<>();
-        String sql = "SELECT * FROM Conferences ORDER BY Start_DateTime";
+        String sql = "SELECT * FROM Conferences ORDER BY C_ID";
         try(Connection con = DatabaseConnection.getConnection();
              PreparedStatement pstmt = con.prepareStatement(sql);
              ResultSet rs = pstmt.executeQuery()){

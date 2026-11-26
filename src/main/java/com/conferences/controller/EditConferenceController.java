@@ -7,9 +7,8 @@ import java.time.LocalDateTime;
 import java.sql.SQLException;
 
 import com.conferences.DAO.ConferencesDAO;
-import com.conferences.model.Conference;
+import com.conferences.model.*;
 import com.conferences.service.ConferenceServices;
-import java.sql.SQLException;
 
 public class EditConferenceController {
     @FXML 
@@ -80,7 +79,6 @@ public class EditConferenceController {
             service.alertMessage(error, Alert.AlertType.ERROR);
             return;
         }
-
         int capacity = Integer.parseInt(capacityText.trim());
         try{
             error = service.capacityUpdateValidation(selectedConference.getConferenceID(), capacity);
@@ -88,21 +86,18 @@ public class EditConferenceController {
             service.alertMessage(error, Alert.AlertType.ERROR);
             return;
             }
-        
         }catch(SQLException e){
-            service.alertMessage("Error checking capacity: " + e.getMessage(), Alert.AlertType.ERROR);
+            service.alertMessage(LocalizationManager.get("conf.edit.capacity.error") + e.getMessage(), Alert.AlertType.ERROR);
             return;
         }
-
         LocalDate startDate = startDatePicker.getValue();
         LocalDate endDate = endDatePicker.getValue();
         String sHour = startHourComboBox.getValue();
         String sMinute = startMinuteComboBox.getValue();
         String eHour = endHourComboBox.getValue();
         String eMinute = endMinuteComboBox.getValue();
-
         if(startDate == null || endDate == null || sHour == null || sMinute == null || eHour == null || eMinute == null){
-            service.alertMessage("Please select all date and times", Alert.AlertType.ERROR);
+            service.alertMessage(LocalizationManager.get("validation.date.empty"), Alert.AlertType.ERROR);
             return;
         }
         LocalDateTime start = startDate.atTime(Integer.parseInt(sHour),Integer.parseInt(sMinute));
@@ -113,20 +108,19 @@ public class EditConferenceController {
             return;
         }
         String venue = venueTextField.getText();
-
         Conference conference = new Conference(selectedConference.getConferenceID(),title, capacity, start, end, venue);
         ConferencesDAO db = new ConferencesDAO();
         try{
             boolean updated = db.updateConference(conference);
             if(updated){
-                service.alertMessage("Conference updated successfully!", Alert.AlertType.INFORMATION);
+                service.alertMessage(LocalizationManager.get("conf.edit.success"), Alert.AlertType.INFORMATION);
                 Stage stage = (Stage) editButton.getScene().getWindow();
                 stage.close();
             }else{
-                service.alertMessage("Conference not found!", Alert.AlertType.ERROR);
+                service.alertMessage(LocalizationManager.get("conf.edit.notFound"), Alert.AlertType.ERROR);
             }
         }catch(SQLException e){
-            service.alertMessage("Error updating conference: " + e.getMessage(), Alert.AlertType.ERROR);
+            service.alertMessage(LocalizationManager.get("conf.edit.error") + " " + e.getMessage(), Alert.AlertType.ERROR);
         }
     } 
 

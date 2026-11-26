@@ -8,32 +8,32 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="317.0" prefWidth="308.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.conferences.controller.EditConferenceController">
+<AnchorPane prefHeight="317.0" prefWidth="360.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.conferences.controller.EditConferenceController">
    <children>
-      <Button fx:id="editButton" layoutX="75.0" layoutY="277.0" mnemonicParsing="false" onAction="#editConference" prefHeight="25.0" prefWidth="98.0" text="Save" />
-      <Button fx:id="cancelButton" layoutX="185.0" layoutY="277.0" mnemonicParsing="false" onAction="#cancelConference" prefHeight="25.0" prefWidth="98.0" text="Cancel" />
-      <Label alignment="CENTER" layoutX="16.0" layoutY="14.0" prefHeight="25.0" prefWidth="277.0" style="-fx-background-color: A20025; -fx-background-radius: 5px;" text="Edit Conference" textFill="WHITE">
+      <Button fx:id="editButton" layoutX="125.0" layoutY="277.0" mnemonicParsing="false" onAction="#editConference" prefHeight="25.0" prefWidth="98.0" text="%conf.button.save" />
+      <Button fx:id="cancelButton" layoutX="235.0" layoutY="277.0" mnemonicParsing="false" onAction="#cancelConference" prefHeight="25.0" prefWidth="98.0" text="%Cancel" />
+      <Label alignment="CENTER" layoutX="16.0" layoutY="14.0" prefHeight="25.0" prefWidth="328.0" style="-fx-background-color: #A20025; -fx-background-radius: 5px;" text="%conf.edit.heading" textFill="WHITE">
          <font>
             <Font name="Century Gothic Bold" size="14.0" />
          </font>
       </Label>
-      <TextField fx:id="titleTextField" layoutX="130.0" layoutY="50.0" prefHeight="25.0" prefWidth="153.0" />
-      <Label layoutX="26.0" layoutY="50.0" prefHeight="25.0" prefWidth="98.0" text="Title" />
-      <TextField fx:id="capacityTextField" layoutX="130.0" layoutY="82.0" prefHeight="25.0" prefWidth="153.0" />
-      <Label layoutX="26.0" layoutY="82.0" prefHeight="25.0" prefWidth="98.0" text="Capacity" />
-      <Label layoutX="26.0" layoutY="114.0" prefHeight="25.0" prefWidth="98.0" text="Start Date" />
-      <Label layoutX="26.0" layoutY="178.0" prefHeight="25.0" prefWidth="98.0" text="End Date" />
-      <Label layoutX="26.0" layoutY="147.0" prefHeight="25.0" prefWidth="98.0" text="Start Time" />
-      <Label layoutX="26.0" layoutY="209.0" prefHeight="25.0" prefWidth="98.0" text="End Time" />
-      <TextField fx:id="venueTextField" layoutX="130.0" layoutY="247.0" prefHeight="25.0" prefWidth="153.0" />
-      <Label layoutX="26.0" layoutY="247.0" prefHeight="25.0" prefWidth="98.0" text="Venue (optional)" />
-      <DatePicker fx:id="endDatePicker" layoutX="130.0" layoutY="178.0" prefHeight="25.0" prefWidth="153.0" />
-      <DatePicker fx:id="startDatePicker" layoutX="130.0" layoutY="114.0" prefHeight="25.0" prefWidth="153.0" />
-      <ComboBox fx:id="startHourComboBox" layoutX="130.0" layoutY="147.0" prefHeight="25.0" prefWidth="67.0" />
-      <Label alignment="CENTER" layoutX="195.0" layoutY="147.0" prefHeight="25.0" prefWidth="24.0" text=":" />
-      <ComboBox fx:id="startMinuteComboBox" layoutX="217.0" layoutY="147.0" prefHeight="25.0" prefWidth="67.0" />
-      <ComboBox fx:id="endHourComboBox" layoutX="129.0" layoutY="209.0" prefHeight="25.0" prefWidth="67.0" />
-      <Label alignment="CENTER" layoutX="194.0" layoutY="209.0" prefHeight="25.0" prefWidth="24.0" text=":" />
-      <ComboBox fx:id="endMinuteComboBox" layoutX="216.0" layoutY="209.0" prefHeight="25.0" prefWidth="67.0" />
+      <Label layoutX="26.0" layoutY="50.0" prefHeight="25.0" prefWidth="140.0" text="%conf.field.title" />
+      <TextField fx:id="titleTextField" layoutX="180.0" layoutY="50.0" prefHeight="25.0" prefWidth="153.0" />
+      <Label layoutX="26.0" layoutY="82.0" prefHeight="25.0" prefWidth="140.0" text="%conf.field.capacity" />
+      <TextField fx:id="capacityTextField" layoutX="180.0" layoutY="82.0" prefHeight="25.0" prefWidth="153.0" />
+      <Label layoutX="26.0" layoutY="114.0" prefHeight="25.0" prefWidth="140.0" text="%conf.field.startDate" />
+      <DatePicker fx:id="startDatePicker" layoutX="180.0" layoutY="114.0" prefHeight="25.0" prefWidth="153.0" />
+      <Label layoutX="26.0" layoutY="147.0" prefHeight="25.0" prefWidth="140.0" text="%conf.field.startTime" />
+      <ComboBox fx:id="startHourComboBox" layoutX="180.0" layoutY="147.0" prefHeight="25.0" prefWidth="67.0" />
+      <Label alignment="CENTER" layoutX="247.0" layoutY="147.0" prefHeight="25.0" prefWidth="19.0" text=":" />
+      <ComboBox fx:id="startMinuteComboBox" layoutX="266.0" layoutY="147.0" prefHeight="25.0" prefWidth="67.0" />
+      <Label layoutX="26.0" layoutY="178.0" prefHeight="25.0" prefWidth="140.0" text="%conf.field.endDate" />
+      <DatePicker fx:id="endDatePicker" layoutX="180.0" layoutY="178.0" prefHeight="25.0" prefWidth="153.0" />
+      <Label layoutX="26.0" layoutY="209.0" prefHeight="25.0" prefWidth="140.0" text="%conf.field.endTime" />
+      <ComboBox fx:id="endHourComboBox" layoutX="180.0" layoutY="209.0" prefHeight="25.0" prefWidth="67.0" />
+      <Label alignment="CENTER" layoutX="247.0" layoutY="209.0" prefHeight="25.0" prefWidth="19.0" text=":" />
+      <ComboBox fx:id="endMinuteComboBox" layoutX="266.0" layoutY="209.0" prefHeight="25.0" prefWidth="67.0" />
+      <Label layoutX="26.0" layoutY="247.0" prefHeight="25.0" prefWidth="140.0" text="%conf.field.venue" />
+      <TextField fx:id="venueTextField" layoutX="180.0" layoutY="247.0" prefHeight="25.0" prefWidth="153.0" />
    </children>
 </AnchorPane>
