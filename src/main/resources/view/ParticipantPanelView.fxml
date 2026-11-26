@@ -14,7 +14,7 @@
     <Text text="%conf.heading" style="-fx-font-weight: bold; -fx-font-size: 14px;" />
 
     <HBox alignment="CENTER_RIGHT" spacing="10">
-        <Button text="%lang.label" onAction="#" prefWidth="60" style="-fx-base: #e66f6f; -fx-text-fill: red;"/> //Add action
+        <Button text="%lang.label" onAction="#changeLanguage" prefWidth="60" style="-fx-base: #e66f6f; -fx-text-fill: red;"/> //Add action
     </HBox>
 
     <TableView fx:id="tableConferences" VBox.vgrow="ALWAYS">
