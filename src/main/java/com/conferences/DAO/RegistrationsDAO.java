@@ -1,4 +1,4 @@
-package com.conferences.model;
+package com.conferences.DAO;
 import java.sql.Connection;
 import java.sql.Statement;
 import java.sql.PreparedStatement;
@@ -8,6 +8,10 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import com.conferences.model.DatabaseConnection;
+import com.conferences.model.Registration;
+
 import java.util.List;
 import java.util.ArrayList;
 

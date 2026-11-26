@@ -1,4 +1,4 @@
-package com.conferences.model;
+package com.conferences.DAO;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
@@ -7,8 +7,13 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import com.conferences.model.DatabaseConnection;
+import com.conferences.model.User;
 
 public class UserDAO 
 {
@@ -225,12 +230,20 @@ public class UserDAO
     }
     public boolean updateUserCredentials(User user)
     {
+        if(user==null || user.getPassword() == null)
+        {
+            return false;
+        }
+
+        String pwd = user.getPassword();
+        String passwordToStore = pwd.matches("^[a-fA-F0-9]{64}$")?pwd : hashPassword(pwd);
+
         String sql = "UPDATE Credentials SET Email_Address = ?, Password = ? WHERE U_ID = ?";
         try (Connection conn = DatabaseConnection.getConnection();
              PreparedStatement p = conn.prepareStatement(sql))
         {
             p.setString(1, user.getEmail());
-            p.setString(2, hashPassword(user.getPassword()));
+            p.setString(2,passwordToStore);
             p.setInt(3, user.getId());
             return p.executeUpdate()>0;
         }
@@ -240,6 +253,57 @@ public class UserDAO
             return false;
         }
     }
+
+    public User getUserById(int userId) throws SQLException{
+        String sql = "SELECT u.U_ID, u.Full_Name, u.Age, u.Role, " +
+                 "c.Email_Address " +
+                 "FROM Users u LEFT JOIN Credentials c ON u.U_ID = c.U_ID " +
+                 "WHERE u.U_ID = ?";
+        try (Connection conn = DatabaseConnection.getConnection();
+                PreparedStatement pstmt = conn.prepareStatement(sql)) {
+
+                pstmt.setInt(1, userId);
+
+                try (ResultSet rs = pstmt.executeQuery()) {
+                    if (rs.next()) {
+                        return new User(
+                            rs.getInt("U_ID"),
+                            rs.getString("Full_Name"),
+                            rs.getString("Email_Address"),
+                            null,
+                            rs.getInt("Age"),
+                            rs.getString("Role")
+                        );
+                    }
+                }
+            }
+        return null;
+    }
+
+    public List<User> getAllParticipants() throws SQLException{
+        String sql = "SELECT u.U_ID, u.Full_Name, u.Age, u.Role, c.Email_Address From Users u LEFT JOIN Credentials c ON u.U_ID = c.U_ID WHERE u.Role = 'PARTICIPANT'";
+        List<User> participants = new ArrayList<>();
+        
+        try (Connection conn = DatabaseConnection.getConnection();
+         PreparedStatement pstmt = conn.prepareStatement(sql);
+         ResultSet rs = pstmt.executeQuery()) {
+
+        while (rs.next()) {
+            User user = new User(
+                rs.getInt("U_ID"),
+                rs.getString("Full_Name"),
+                rs.getString("Email_Address"),
+                null,
+                rs.getInt("Age"),
+                rs.getString("Role"));
+
+                 participants.add(user);
+            }
+        }
+        return participants;
+    }
+
+    
 
 }
 

@@ -10,6 +10,12 @@ public class Conference {
     private LocalDateTime endDateTime;
     private String location;
 
+    private int confirmed;
+    private int waitlisted;
+    private int available;
+    private boolean full;
+    private String fullStatus;
+
     //Constructor
     public Conference(int conferenceID, String title, int capacity, LocalDateTime startDateTime, LocalDateTime endDateTime, String location) {
         this.conferenceID = conferenceID;
@@ -25,6 +31,17 @@ public class Conference {
         this.startDateTime = startDateTime;
         this.endDateTime = endDateTime;
         this.location = location;
+    }
+     public Conference(String title, int capacity, LocalDateTime startDateTime, LocalDateTime endDateTime, String location, int confirmed, int waitlisted, int available,  boolean full) {
+        this.title = title;
+        this.capacity = capacity;
+        this.startDateTime = startDateTime;
+        this.endDateTime = endDateTime;
+        this.location = location;
+        this.confirmed=confirmed;
+        this.waitlisted=waitlisted;
+        this.available = available;
+        this.full=full;
     }
 
     //Setters
@@ -46,6 +63,21 @@ public class Conference {
     public void setLocation(String location) {
         this.location = location;
     }
+   public void setConfirmed(int confirmed){
+        this.confirmed=confirmed;
+    }
+    public void setWaitlisted(int waitlisted){
+        this.waitlisted=waitlisted;
+    }
+    public void setAvailable(int available){
+        this.available=available;
+    }
+    public void setFull(boolean full){
+        this.full=full;
+    }
+    public void setFullStatus(String fullStatus){
+        this.fullStatus=fullStatus;
+    }
 
     //Getters
     public int getConferenceID() {
@@ -65,7 +97,20 @@ public class Conference {
     }   
     public String getLocation() {
         return location;
-    }   
-
-
+    }  
+    public int getConfirmed(){
+        return confirmed;
+    }
+    public int getWaitlisted(){
+        return waitlisted;
+    }
+    public int getAvailable(){
+        return available;
+    }
+    public boolean getFull(){
+        return full;
+    }
+    public String getFullStatus(){
+        return fullStatus;
+    }
 }

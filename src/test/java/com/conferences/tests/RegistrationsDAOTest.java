@@ -5,8 +5,9 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 import org.junit.jupiter.api.Test;
+
+import com.conferences.DAO.RegistrationsDAO;
 import com.conferences.model.Registration;
-import com.conferences.model.RegistrationsDAO;
 
 public class RegistrationsDAOTest {
 

@@ -1,4 +1,5 @@
-package com.conferences.model;
+package com.conferences.controller;
+import com.conferences.DAO.UserDAO;
 import com.conferences.model.*;
 import java.io.IOException;
 import java.net.URL;
@@ -64,7 +65,6 @@ public class SignUpController implements Initializable
     @Override 
     public void initialize(URL location, ResourceBundle resources) 
     {
-        // Hint: initialize() will be called when the associated FXML has been completely loaded.
         languageMap.put("English",Locale.ENGLISH);
         languageMap.put("Français", Locale.FRENCH);
 
@@ -181,6 +181,21 @@ public class SignUpController implements Initializable
             return;
         }
 
+        int atIndex = email.indexOf("@");
+        int dotIndex = email.lastIndexOf(".");
+
+        if(atIndex <=0 || dotIndex <= atIndex+1 || dotIndex >= email.length()-1)
+        {
+            errorLabel.setText(LocalizationManager.get("signup.error.email"));
+            return;
+        }
+
+        if(password.length()<6)
+        {
+            errorLabel.setText(LocalizationManager.get("signup.error.password"));
+            return;
+        }
+
         if(userDAO.emailExists(email))
         {
             errorLabel.setText(LocalizationManager.get("signup.error.emailExists"));
@@ -191,7 +206,7 @@ public class SignUpController implements Initializable
 
         if (created) 
         {
-            switchScene(event, "com/conference/model/LoginView.fxml");    
+            switchScene(event, "/view/LoginView.fxml");    
         }
         else
         {
@@ -202,7 +217,7 @@ public class SignUpController implements Initializable
     @FXML 
     private void handleSwitchToLogin(ActionEvent event)
     {
-        switchScene(event, "com/conference/model/LoginView.fxml");
+        switchScene(event, "/view/LoginView.fxml");
     }
 
     private void switchScene(ActionEvent event, String fxmlPath)

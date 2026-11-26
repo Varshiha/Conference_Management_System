@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="305.0" prefWidth="650.0" xmlns="http://javafx.com/javafx/26" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.conferences.controller.ConferenceOverviewController">
+   <children>
+      <Label alignment="CENTER" layoutX="23.0" layoutY="14.0" prefHeight="25.0" prefWidth="604.0" style="-fx-background-color: #A20025; -fx-background-radius: 5px;" text="%report.overview" textFill="WHITE">
+         <font>
+            <Font name="Century Gothic Bold" size="14.0" />
+         </font>
+      </Label>
+      <TableView fx:id="conferenceTableView" layoutX="23.0" layoutY="57.0" prefHeight="200.0" prefWidth="604.0">
+         <columns>
+            <TableColumn fx:id="idColumn" prefWidth="40.0" text="ID" />
+            <TableColumn fx:id="titleColumn" prefWidth="200.0" text="%admin.column.title" />
+            <TableColumn fx:id="capacityColumn" prefWidth="80.0" text="%admin.column.capacity" />
+            <TableColumn fx:id="confirmedColumn" prefWidth="110.0" text="%admin.column.confirmed" />
+            <TableColumn fx:id="availableColumn" prefWidth="170.0" text="%admin.column.available" />
+         </columns>
+      </TableView>
+      <Button fx:id="closeCOButton" layoutX="281.0" layoutY="267.0" mnemonicParsing="false" onAction="#closeConferenceOverview" prefHeight="25.0" prefWidth="88.0" text="%report.button.close" />
+   </children>
+</AnchorPane>

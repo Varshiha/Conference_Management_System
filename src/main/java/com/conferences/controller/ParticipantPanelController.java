@@ -1,4 +1,4 @@
-package com.conferences.model;
+package com.conferences.controller;
 
 import java.net.URL;
 import java.sql.Connection;
@@ -7,6 +7,10 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.time.LocalDateTime;
 import java.util.ResourceBundle;
+
+import com.conferences.model.Conference;
+import com.conferences.model.DatabaseConnection;
+import com.conferences.model.UserSession;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -70,6 +74,14 @@ public class ParticipantPanelController implements Initializable
             } catch(SQLException e){
                 throw e;
             }
+        //TODO
+        if(!UserSession.isLoggedIn()) //I'll move to correct spot later - Daniel
+        {
+            //pls do the same thing here swithc it back to log in page
+
+            //and pls when u add the logout button its gonna have 
+            // the same logic as the one in admin panel controller
+        }
     }
 
 
@@ -81,15 +93,16 @@ public class ParticipantPanelController implements Initializable
         s.close();
     }
 
-    @FXML
-    private void register(){}
 
-    @FXML
-    private void listConfirmed(){}
+    // These 3 will change a flag int (will add later) and that will change the sql in loadData().
 
-    @FXML
-    private void listWaitlisted(){}
-    
-    //TODO Add Language change method
+    @SuppressWarnings("unused")
+    @FXML private void register(){}
+    @SuppressWarnings("unused")
+    @FXML private void listConfirmed(){}
+    @SuppressWarnings("unused")
+    @FXML private void listWaitlisted(){}
+    @SuppressWarnings("unused")
+    @FXML private void changeLanguage(){}
 
 }
