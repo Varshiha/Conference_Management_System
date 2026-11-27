@@ -13,6 +13,8 @@ import com.conferences.DAO.ConferencesDAO;
 import com.conferences.model.Conference;
 import com.conferences.model.LocalizationManager;
 import java.text.MessageFormat;
+import java.util.Set;
+import java.util.HashSet;
 
 public class ConferenceServices {
 
@@ -135,12 +137,12 @@ public class ConferenceServices {
 		RegistrationsDAO db = new RegistrationsDAO();
 		UserDAO user = new UserDAO();
 		List<Registration> registrations = db.getRegistrationsByConference(conferenceId);
-		List<Registration> confirmed = registrations.stream()
+		List<Registration> waitlisted = registrations.stream()
 											.filter(r -> r.getStatus().equals("WAITLISTED"))
 											.sorted(Comparator.comparing(Registration::getWaitlistPosition))
 											.toList();
 		List<User> participants = new ArrayList<>();
-		for(Registration r : confirmed){
+		for(Registration r : waitlisted){
 			User u = user.getUserById(r.getUserId());
 
 			if(u != null){
@@ -160,15 +162,28 @@ public class ConferenceServices {
 	}
 
 	public List<Conference> getUnregisteredConference() throws SQLException{
-		ConferencesDAO db = new ConferencesDAO();
-		List<Conference> conferences = db.getAllConferences();
+		ConferencesDAO cdb = new ConferencesDAO();
+		RegistrationsDAO rdb = new RegistrationsDAO();
+
+		List<Conference> conferences = cdb.getAllConferences();
+		List<Registration> registrations = rdb.getAllRegistrations();
+
+
+		//we only need wether a conference has atleast one confirmed or waitlisted , dont duplicate conference ids
+		Set<Integer> registeredIDS = new HashSet<>();
+		for(Registration r : registrations){
+			if(r.getStatus().equals("CONFIRMED") || r.getStatus().equals("WAITLISTED")){
+				registeredIDS.add(r.getConferenceId());
+			}
+		}
+
 		List<Conference> unregistered = new ArrayList<>();
 		for(Conference c : conferences){
-			int id = c.getConferenceID();
-			if(getConfirmedCount(id) == 0 && getWaitlistedCount(id)==0){
+			if(!registeredIDS.contains(c.getConferenceID())){
 				unregistered.add(c);
 			}
 		}
+		
 		return unregistered;
 	}
 }

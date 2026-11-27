@@ -121,6 +121,33 @@ public class RegistrationsDAO {
         return registrations;
     }
 
+    public List<Registration> getAllRegistrations() throws SQLException {
+        String sql = "SELECT * FROM Registrations";
+        List<Registration> registrations = new ArrayList<>();
+
+        try(Connection con = DatabaseConnection.getConnection();
+            PreparedStatement pstmt = con.prepareStatement(sql);
+            ResultSet rs = pstmt.executeQuery()){
+
+            while(rs.next()){
+                int R_ID = rs.getInt("R_ID");
+                int C_ID = rs.getInt("C_ID");
+                int U_ID = rs.getInt("U_ID");
+                LocalDateTime registrationDate = LocalDateTime.parse(rs.getString("Registration_Date"), formatter);
+                String status = rs.getString("Status");
+                int position = rs.getInt("Waitlist_Position");
+                Integer waitinglistPosition = rs.wasNull() ? null : position;
+
+                registrations.add(new Registration(R_ID, C_ID, U_ID, registrationDate, status, waitinglistPosition));
+            }
+
+        }catch(SQLException e){
+            logger.log(Level.SEVERE, "Error retrieving all registrations: ", e);
+            throw e;
+        }
+        return registrations;
+}
+
     //Update operation
     public boolean updateRegistration(Registration r) throws SQLException{
         String sql = "UPDATE Registrations SET Status = ?, Waitlist_Position = ? WHERE R_ID = ?";
