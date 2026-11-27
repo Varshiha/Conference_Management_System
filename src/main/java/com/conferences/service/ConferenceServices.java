@@ -1,3 +1,8 @@
+/**
+ * Provides business logic, conference validation 
+ * registration calculations and reporting services.
+ * 
+ */
 package com.conferences.service;
 import java.time.LocalDateTime;
 import javafx.scene.control.Alert;

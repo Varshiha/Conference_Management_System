@@ -1,3 +1,8 @@
+/**
+ * Represents a participant's registration for a conference, 
+ * including the registration date, status, and waiting list position.
+ * 
+ */
 package com.conferences.model;
 import java.time.LocalDateTime;
 

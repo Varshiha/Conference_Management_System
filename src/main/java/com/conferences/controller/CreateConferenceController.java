@@ -1,3 +1,8 @@
+/**
+ * Handles user interactions and validates input
+ * when creating a new conference
+ * 
+ */
 package com.conferences.controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;

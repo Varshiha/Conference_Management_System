@@ -1,3 +1,7 @@
+/**
+ * Display conferenc details, capacity, confirmed 
+ * registrations and available seats.
+ */
 package com.conferences.controller;
 import java.sql.SQLException;
 import java.util.List;

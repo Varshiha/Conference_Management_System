@@ -1,3 +1,7 @@
+/**
+ * Displays the confirmed participants of a selected conference
+ * 
+ */
 package com.conferences.controller;
 import java.sql.SQLException;
 import java.util.List;

@@ -1,3 +1,7 @@
+/**
+ * Handles database operations for creating, retrieving,
+ * updating and deleting conference registrationg
+ */
 package com.conferences.DAO;
 import java.sql.Connection;
 import java.sql.Statement;
@@ -140,7 +144,6 @@ public class RegistrationsDAO {
 
                 registrations.add(new Registration(R_ID, C_ID, U_ID, registrationDate, status, waitinglistPosition));
             }
-
         }catch(SQLException e){
             logger.log(Level.SEVERE, "Error retrieving all registrations: ", e);
             throw e;

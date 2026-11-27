@@ -1,3 +1,8 @@
+/**
+ * Displays the conferences and active registration
+ * statuses of a selected participants
+ * 
+ */
 package com.conferences.controller;
 import java.sql.SQLException;
 import java.util.ArrayList;

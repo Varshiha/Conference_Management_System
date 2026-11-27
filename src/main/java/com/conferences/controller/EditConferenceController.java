@@ -1,3 +1,8 @@
+/**
+ * Handles report selection and opens the selected
+ * report using Report Factory.
+ * 
+ */
 package com.conferences.controller;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;

@@ -1,3 +1,7 @@
+/**
+ * Establishes connections to the SQLIte database
+ * and enables foreign key constraints
+ */
 package com.conferences.model;
 import java.sql.Connection;
 import java.sql.DriverManager;

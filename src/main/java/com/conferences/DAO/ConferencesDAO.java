@@ -1,3 +1,8 @@
+/**
+ * Handles database operations for creating, retrieving,
+ *  updating and deleting conferences.
+ * 
+ */
 package com.conferences.DAO;
 import java.sql.Connection;
 import java.sql.SQLException;

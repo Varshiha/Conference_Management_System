@@ -1,7 +1,9 @@
+/**
+ * Implements the Factory design patter to create
+ * report controller based on the selected reporty type
+ */
 package com.conferences.controller;
-
 import com.conferences.model.LocalizationManager;
-
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

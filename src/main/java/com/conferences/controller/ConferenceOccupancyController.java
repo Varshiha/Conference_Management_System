@@ -1,3 +1,8 @@
+/**
+ * Displays the number and percentage of occupied
+ * seats in a selected conference.
+ * 
+ */
 package com.conferences.controller;
 import java.sql.SQLException;
 import java.util.List;
@@ -10,6 +15,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
+import java.text.NumberFormat;
 
 public class ConferenceOccupancyController implements Report{
      @FXML 
@@ -49,9 +55,13 @@ public class ConferenceOccupancyController implements Report{
         int conferenceId = selectedConference.getConferenceID();
         int capacity = selectedConference.getCapacity();
         int occupied = service.getConfirmedCount(conferenceId);
+
         double percentage = (double) occupied/capacity *100;
         numberTextField.setText(String.valueOf(occupied));
-        percentageTextField.setText(String.valueOf(percentage) + "%");
+
+        NumberFormat format = NumberFormat.getPercentInstance(LocalizationManager.getLocale());
+        format.setMaximumFractionDigits(2);
+        percentageTextField.setText(format.format(percentage/100));
     }
     
     @FXML 

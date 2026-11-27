@@ -1,3 +1,8 @@
+/**
+ * Provides JUnit tests to verify conference
+ * database operations.
+ *
+ */
 package com.conferences.tests;
 import com.conferences.DAO.ConferencesDAO;
 import com.conferences.model.Conference;

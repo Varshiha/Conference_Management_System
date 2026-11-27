@@ -1,3 +1,8 @@
+/**
+ * Displays conferences that have no confirmed
+ * or waitlisted participants.
+ * 
+ */
 package com.conferences.controller;
 import java.sql.SQLException;
 import java.util.List;

@@ -1,3 +1,8 @@
+/**
+ * Manages the administrator interface and handles
+ * conference management and report access.
+ * 
+ */
 package com.conferences.controller;
 import java.util.logging.Level;
 import com.conferences.service.ApplicationLogger;
@@ -124,6 +129,9 @@ public class AdminPanelController{
 
     @FXML
     private void createConferencePage() throws Exception{
+        if(!checkAdmin()){
+            return;
+        }
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/CreateConference.fxml"), LocalizationManager.getBundle());
         Parent root = loader.load();
         Stage stage = new Stage();
@@ -135,6 +143,9 @@ public class AdminPanelController{
 
     @FXML
     private void editConferencePage()  throws Exception{
+        if(!checkAdmin()){
+            return;
+        }
         Conference selectedConference = conferenceTableView.getSelectionModel().getSelectedItem();
         if(selectedConference == null){
             service.alertMessage(LocalizationManager.get("admin.alert.edit.select"), Alert.AlertType.ERROR);
@@ -153,6 +164,9 @@ public class AdminPanelController{
 
     @FXML
     private void deleteConferencePage() throws SQLException{
+        if(!checkAdmin()){
+            return;
+        }
         Conference selectedConference = conferenceTableView.getSelectionModel().getSelectedItem();
         if(selectedConference == null){
             service.alertMessage(LocalizationManager.get("admin.alert.delete.select"), Alert.AlertType.ERROR);
@@ -186,6 +200,9 @@ public class AdminPanelController{
 
     @FXML
     private void refreshConferencePage() throws SQLException{
+        if(!checkAdmin()){
+            return;
+        }
         List<Conference> conferences = db.getAllConferences();
         for(Conference c : conferences){
             int id = c.getConferenceID();
@@ -205,6 +222,9 @@ public class AdminPanelController{
 
     @FXML
     private void reportsPage() throws Exception{
+        if(!checkAdmin()){
+            return;
+        }
         FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/Reports.fxml"), LocalizationManager.getBundle());
         Parent root = loader.load();
         Stage stage = new Stage();
@@ -243,5 +263,14 @@ public class AdminPanelController{
         stage.sizeToScene();
         stage.centerOnScreen();
         stage.setTitle(LocalizationManager.get("app.title"));
+    }
+
+    //make sure user is admin and not participant
+    private boolean checkAdmin(){
+        if(!UserSession.isAdmin()){
+            service.alertMessage(LocalizationManager.get("alert.unauthorized.admin"), Alert.AlertType.ERROR);
+            return false;
+        }
+        return true;
     }
 }

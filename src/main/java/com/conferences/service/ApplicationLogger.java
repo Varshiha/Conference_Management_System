@@ -1,3 +1,8 @@
+/**
+ * Implements the Singleton design pattern to provide
+ * centralized error loggin throughout the application.
+ * 
+ */
 package com.conferences.service;
 import java.util.logging.Logger;
 import java.util.logging.Level;

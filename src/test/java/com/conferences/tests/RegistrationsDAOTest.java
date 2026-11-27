@@ -1,3 +1,8 @@
+/**
+ * Provides JUnit tests to verify registration
+ * database operations.
+ *
+ */
 package com.conferences.tests;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.sql.SQLException;

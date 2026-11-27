@@ -1,3 +1,8 @@
+/**
+ * Displays the waitlisted participants of a selected 
+ * conference in waiting list order.
+ * 
+ */
 package com.conferences.controller;
 import java.sql.SQLException;
 import java.util.List;

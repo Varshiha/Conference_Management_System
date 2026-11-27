@@ -1,3 +1,8 @@
+/**
+ * Represents a conference with its title, capacity,
+ * schedule, location and registration information.
+ * 
+ */
 package com.conferences.model;
 import java.time.LocalDateTime;
 
